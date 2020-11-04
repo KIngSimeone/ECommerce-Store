@@ -33,22 +33,6 @@ class DefaultErrorMessages(str, Enum):
     USER_DELETION_FAILED = "Something went wrong, could not delete the user successfully"
     PASSWORD_RESET_FAILED = "Something went wrong, attempt to reset the password was unsuccessful"
 
-    MAGENTO_SHOP_ALREADY_EXIST = "The specified magento shop already exist"
-    PRESTASHOP_ALREADY_EXIST = "The specified prestashop already exist"
-    MAGENTO_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the magento credential successfully"
-    PRESTASHOP_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the prestashop credential successfully"
-    WOOCOMMERCE_SHOP_ALREADY_EXIST = "The specified woocommerce shop already exist"
-    WOOCOMMERCE_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the woocommerce shop credential successfully"
-
-    CDON_CREDENTIAL_ALREADY_EXIST = "The specified CDON token already exist for merchant"
-    CDON_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the CDON credential for merchant successfully"
-    WISH_CREDENTIAL_ALREADY_EXIST = "The specified WISH token already exist for merchant"
-    WISH_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the WISH credential for merchant successfully"
-    FYNDIQ_CREDENTIAL_ALREADY_EXIST = "The specified FYNDIQ token already exist for merchant"
-    FYNDIQ_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the FYNDIQ credential for merchant successfully"
-    SHOPIFY_CREDENTIAL_ALREADY_EXIST = "The specified SHOPIFY token already exist for merchant"
-    SHOPIFY_CREDENTIAL_CREATION_FAILED = "Something went wrong, could not create the SHOPIFY credential for merchant successfully"
-
     INVALID_COUNTRY_CODE = "The country code specified is invalid"
     INVALID_CURRENCY_CODE = "The currency code specified is invalid"
 
@@ -63,7 +47,13 @@ def getInvalidCredentialsErrorPacket():
     return getError(code = ErrorCodes.INVALID_CREDENTIALS,
                     defaultMessage = DefaultErrorMessages.INVALID_CREDENTIALS)
 
+def getUserAlreadyExistErrorPacket(value):
+    return getError(code = ErrorCodes.USER_ALREADY_EXIST, 
+                    defaultMessage = DefaultErrorMessages.USER_ALREADY_EXIST.format(value))
 
+def getUserCreationFailedErrorPacket():
+    return getError(code=ErrorCodes.USER_CREATION_FAILED, 
+                    defaultMessage=DefaultErrorMessages.USER_CREATION_FAILED)
 
 ## generic invalid errors
 def getGenericInvalidParametersErrorPacket(message):

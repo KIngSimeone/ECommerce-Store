@@ -175,6 +175,204 @@ def generateControllerAccessToken(controller):
         logger.error(e)
         return None
 
+# Create User
+def createUser(firstName, lastName, userName, email, password, phone):
+    try:
+        user = User(
+            firstName=firstName,
+            lastName=lastName,
+            userName=userName,
+            email=email,
+            phone=phone,
+    
+        )
+
+        # create and store password hash
+        hashedPassword = make_password(password)
+        user.password = hashedPassword
+
+        user.save()
+        return user
+    except Exception as err:
+        logger.error('createUser@error')
+        logger.error(err)
+        return None
+
+
+# Create Manager
+def createManager(firstName, lastName, userName, email, password, phone):
+    try:
+        manager = Manager(
+            firstName=firstName,
+            lastName=lastName,
+            userName=userName,
+            email=email,
+            phone=phone,
+            
+        )
+
+        # create and store password hash
+        hashedPassword = make_password(password)
+        manager.password = hashedPassword
+
+        manager.save()
+        return manager
+    except Exception as err:
+        logger.error('createManager@error')
+        logger.error(err)
+        return None
+
+
+# Create Controller
+def createController(firstName, lastName, userName, email, password, phone):
+    try:
+        controller = Controller(
+            firstName=firstName,
+            lastName=lastName,
+            userName=userName,
+            email=email,
+            phone=phone,
+            
+        )
+
+        # create and store password hash
+        hashedPassword = make_password(password)
+        controller.password = hashedPassword
+
+        controller.save()
+        return controller
+    except Exception as err:
+        logger.error('createController@error')
+        logger.error(err)
+        return None
+
+
+
+def getUserByAccessToken(accessToken):
+    try:
+        userAccessTokenRecord = UserAccessTokens.objects.filter(
+            accessToken=accessToken)
+        if len(userAccessTokenRecord) > 0:
+            userAccessTokenRecord = userAccessTokenRecord[0]
+            if userAccessTokenRecord.expiresAt > timezone.now():
+                associatedUser = userAccessTokenRecord.user
+                if not associatedUser is None and userAccessTokenRecord.expiresAt > timezone.now():
+
+                    associatedUser.lastActiveOn = timezone.now()
+                    userAccessTokenRecord.expiresAt = getLastActiveForwarding()
+
+                    userAccessTokenRecord.save()
+                    associatedUser.save()
+
+                    return userAccessTokenRecord.user
+
+            return None
+        else:
+            return None
+            
+        return None
+    except UserAccessTokens.DoesNotExist:
+        print('getUserByAccessToken@error')
+        return None
+
+def getManagerByAccessToken(accessToken):
+    try:
+        managerAccessTokenRecord = ManagerAccessTokens.objects.filter(
+            accessToken=accessToken)
+        if len(managerAccessTokenRecord) > 0:
+            managerAccessTokenRecord = managerAccessTokenRecord[0]
+            if managerAccessTokenRecord.expiresAt > timezone.now():
+                associatedManager = managerAccessTokenRecord.manager
+                if not associatedManager is None and managerAccessTokenRecord.expiresAt > timezone.now():
+
+                    associatedManager.lastActiveOn = timezone.now()
+                    managerAccessTokenRecord.expiresAt = getLastActiveForwarding()
+
+                    managerAccessTokenRecord.save()
+                    associatedManager.save()
+
+                    return userAccessTokenRecord.Manager
+
+            return None
+        else:
+            return None
+            
+        return None
+    except ManagerAccessTokens.DoesNotExist:
+        print('getManagerByAccessToken@error')
+        return None
+
+
+def getControllerByAccessToken(accessToken):
+    try:
+        controllerAccessTokenRecord = ControllerAccessTokens.objects.filter(
+            accessToken=accessToken)
+        if len(controllerAccessTokenRecord) > 0:
+            controllerAccessTokenRecord = controllerAccessTokenRecord[0]
+            if controllerAccessTokenRecord.expiresAt > timezone.now():
+                associatedController = controllerAccessTokenRecord.controller
+                if not associatedController is None and controllerAccessTokenRecord.expiresAt > timezone.now():
+
+                    associatedController.lastActiveOn = timezone.now()
+                    controllerAccessTokenRecord.expiresAt = getLastActiveForwarding()
+
+                    controllerAccessTokenRecord.save()
+                    associatedController.save()
+
+                    return userAccessTokenRecord.Controller
+
+            return None
+        else:
+            return None
+            
+        return None
+    except ControllerAccessTokens.DoesNotExist:
+        print('getControllerByAccessToken@error')
+        return None
+
+def getUserByEmail(email):
+    try:
+        return User.objects.get(email=email)
+    except Exception as err:
+        logger.error('getUserByEmail@error')
+        logger.error(err)
+        return None
+
+def getUserByEmailOnly(email):
+    try:
+        return User.objects.get(email=email)
+
+    except Exception as err:
+        logger.error('getUserByEmailOnly@error')
+        logger.error(err)
+        return None
+
+def getUserByUserName(userName):   
+    try:
+        return User.objects.get(userName=userName)
+    
+    except Exception as err:
+        logger.error('getUserByUserName@error')
+        logger.error(err)
+        return None
+
+def getUserById(userId):
+    try:
+        return User.objects.get(id=userId)
+
+    except Exception as err:
+        logger.error('getUserById@error')
+        logger.error(err)
+        return None
+
+def getUserByPhone(phone):
+    try:
+        return User.objects.get(phone=phone)
+
+    except Exception as err:
+        logger.error('getUserByPhone@error')
+        logger.error(err)
+        return None
 
 
 def getExpiresAt():

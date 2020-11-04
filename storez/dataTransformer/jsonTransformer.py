@@ -44,3 +44,14 @@ def generateLoginResponseController(controller, controllerAccessToken):
     }
 
     return controller
+
+def transformUser(user):
+    return {
+        "id": user.id,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "userName": user.userName,
+        "email": user.email,
+        "phone": user.phone,
+        "createdAt": toUiReadableDateFormat(user.createdAt)        
+    }

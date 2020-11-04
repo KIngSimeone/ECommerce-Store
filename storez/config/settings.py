@@ -34,6 +34,7 @@ splittedHosts = env('ALLOWED_HOSTS').split(",")
 ALLOWED_HOSTS = splittedHosts
 
 
+DURATION = env('DURATION')
 # Application definition
 
 INSTALLED_APPS = [

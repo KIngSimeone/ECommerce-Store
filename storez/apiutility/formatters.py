@@ -5,7 +5,7 @@ from dateutil import tz, parser
 import pytz
 
 
-def toUiReadableDateFoormat(value):
+def toUiReadableDateFormat(value):
     try:
         if value is None:
             return ""

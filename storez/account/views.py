@@ -10,7 +10,7 @@ from .models import(
                     ControllerAccessTokens, 
                     ControllerPasswordResetTokens
                     )
-from django.utils import 
+from django.utils import timezone
 from datetime import datetime, date, timedelta
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
@@ -115,13 +115,65 @@ def generateManagerAccessToken(manager):
     try:
         # confrim that manager isn't none
         if manager is None:
-            return None:
+            return None
 
-        # retrieve manager access token record it ir exists
-        managerAccessTokenRecords = ManagerAccessTokens
+        # retrieve manager access token record if it exists
+        managerAccessTokenRecords = ManagerAccessTokens.objects.filter(manager=manager.id)
 
+        managerAccessTokenRecord = None
+        if len(managerAccessTokenRecords) > 0:
+            managerAccessTokenRecord = managerAccessTokenrecords[0]
+            if managerAccessTokenRecord.expiresAt > timezone.now():
 
+                return managerAccessTokenRecord
 
+        else:
+            managerAccessTokenRecord = ManagerAccessTokens(manager=manager)
+
+        managerAccessTokenRecord.accessToken = secrets.token_urlsafe()
+
+        managerAccessTokenRecord.expiresAt = getExpiresAt()
+
+        managerAccessTokenRecord.save()
+
+        return managerAccessTokenRecord
+
+    except Exception as e:
+        logger.error("generateManagerAccessToken@Error")
+        logger.error(e)
+        return None
+
+def generateControllerAccessToken(controller):
+    try:
+        # confirm that the controller isn't none
+        if controller is None:
+            return None
+
+        # retrieve controller access token record if it exists
+        controllerAccessTokenRecords = ControllerAccessTokens.objects.filter(controller=controller.id)
+
+        controllerAccessTokenRecord = None
+        if len(controllerAccessTokenRecords) > 0:
+            controllerAccessTokenRecord = controllerAccessTokenRecords[0]
+            if controllerAccessTokenRecord.expiresAt > timezone.now():
+
+                return controllerAccessTokenRecord
+
+        else:
+            controllerAccessTokenRecord = ControllerAccessTokens(controller=controller)
+
+        controllerAccessTokenRecord.accessToken = secrets.token_urlsafe()
+
+        controllerAccessTokenRecord.expiresAt = getExpiresAt()
+
+        controllerAccessTokenRecord.save()
+
+        return controllerAccessTokenRecord
+
+    except Exception as e:
+        logger.error("generateControllerAccessToken@Error")
+        logger.error(e)
+        return None
 
 
 

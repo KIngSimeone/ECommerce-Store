@@ -3,6 +3,13 @@ from django.http import JsonResponse
 
 from http import HTTPStatus
 
+
+def badRequestResponse(errorCode, message = "", body = {}):
+    return errorResponse(HTTPStatus.BAD_REQUEST, errorCode, message= message, body= body)
+
+def errorResponse(httpStatusCode, errorCode, message = "", body = {}):
+    return JsonResponse({'errorCode': errorCode, 'data': body, 'message': message}, status=httpStatusCode, safe=False)
+
 ## success responses
 
 def createdResponse(message="", body={}):

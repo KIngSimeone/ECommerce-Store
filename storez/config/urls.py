@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from workflows.authentication_workflow import authenticationRouter
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # authentication endpoints
+    path('authenticate/',authenticationRouter,name="userauthentication-router")
 ]

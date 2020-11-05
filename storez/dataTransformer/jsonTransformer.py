@@ -66,3 +66,14 @@ def transformManager(manager):
         "phone": manager.phone,
         "createdAt": toUiReadableDateFormat(manager.createdAt)        
     }
+
+def transformController(controller):
+    return {
+        "id": controller.id,
+        "firstName": controller.firstName,
+        "lastName": controller.lastName,
+        "userName": controller.userName,
+        "email": controller.email,
+        "phone": controller.phone,
+        "createdAt": toUiReadableDateFormat(controller.createdAt)        
+    }

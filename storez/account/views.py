@@ -420,5 +420,51 @@ def getManagerByPhone(phone):
         logger.error(err)
         return None
 
+## Controller functions
+
+def getControllerByEmail(email):
+    try:
+        return Controller.objects.get(email=email)
+    except Exception as err:
+        logger.error('getControllerByEmail@error')
+        logger.error(err)
+        return None
+
+def getControllerByEmailOnly(email):
+    try:
+        return Controller.objects.get(email=email)
+
+    except Exception as err:
+        logger.error('getControllerByEmailOnly@error')
+        logger.error(err)
+        return None
+
+def getControllerByUserName(userName):   
+    try:
+        return Controller.objects.get(userName=userName)
+    
+    except Exception as err:
+        logger.error('getControllerByUserName@error')
+        logger.error(err)
+        return None
+
+def getControllerById(userId):
+    try:
+        return Controller.objects.get(id=userId)
+
+    except Exception as err:
+        logger.error('getControllerById@error')
+        logger.error(err)
+        return None
+
+def getControllerByPhone(phone):
+    try:
+        return Controller.objects.get(phone=phone)
+
+    except Exception as err:
+        logger.error('getControllerByPhone@error')
+        logger.error(err)
+        return None
+
 def getExpiresAt():
     return (timezone.now() + timedelta(minutes=eval(settings.DURATION)))

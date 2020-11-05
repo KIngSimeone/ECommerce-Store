@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import UserAccount, ManagerAccount
+from .models import UserAccount, ManagerAccount, ControllerAccount
 import random
 
 import string
@@ -42,5 +42,23 @@ def createManagerAccount(manager):
 
     except Exception as e:
         logger.error("createManagerAccount@Error")
+        logger.error(e)
+        return None
+
+
+def createControllerAccount(controller):
+    try:
+        if controller is None:
+            return None
+
+        controlleraccount = ControllerAccount(controller=controller)       
+        controlleraccount.balance = 0
+
+        controlleraccount.save()
+
+        return controlleraccount
+
+    except Exception as e:
+        logger.error("createControllerrAccount@Error")
         logger.error(e)
         return None

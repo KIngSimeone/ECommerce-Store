@@ -374,6 +374,51 @@ def getUserByPhone(phone):
         logger.error(err)
         return None
 
+## Manager functions
+
+def getManagerByEmail(email):
+    try:
+        return Manager.objects.get(email=email)
+    except Exception as err:
+        logger.error('getManagerByEmail@error')
+        logger.error(err)
+        return None
+
+def getManagerByEmailOnly(email):
+    try:
+        return Manager.objects.get(email=email)
+
+    except Exception as err:
+        logger.error('getManagerByEmailOnly@error')
+        logger.error(err)
+        return None
+
+def getManagerByUserName(userName):   
+    try:
+        return Manager.objects.get(userName=userName)
+    
+    except Exception as err:
+        logger.error('getManagerByUserName@error')
+        logger.error(err)
+        return None
+
+def getManagerById(userId):
+    try:
+        return Manager.objects.get(id=userId)
+
+    except Exception as err:
+        logger.error('getManagerById@error')
+        logger.error(err)
+        return None
+
+def getManagerByPhone(phone):
+    try:
+        return Manager.objects.get(phone=phone)
+
+    except Exception as err:
+        logger.error('getManagerByPhone@error')
+        logger.error(err)
+        return None
 
 def getExpiresAt():
     return (timezone.now() + timedelta(minutes=eval(settings.DURATION)))

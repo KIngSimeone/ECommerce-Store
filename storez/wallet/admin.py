@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import (
+                    UserAccount,
+                    ManagerAccount,
+                    ControllerAccount
+                    )
+
+admin.site.register(UserAccount)
+admin.site.register(ManagerAccount)
+admin.site.register(ControllerAccount)

@@ -51,6 +51,11 @@ def getUserAlreadyExistErrorPacket(value):
     return getError(code = ErrorCodes.USER_ALREADY_EXIST, 
                     defaultMessage = DefaultErrorMessages.USER_ALREADY_EXIST.format(value))
 
+## Manager already exist error packet
+def getManagerAlreadyExistErrorPacket(value):
+    return getError(code = ErrorCodes.USER_ALREADY_EXIST, 
+                    defaultMessage = DefaultErrorMessages.USER_ALREADY_EXIST.format(value))
+
 def getUserCreationFailedErrorPacket():
     return getError(code=ErrorCodes.USER_CREATION_FAILED, 
                     defaultMessage=DefaultErrorMessages.USER_CREATION_FAILED)

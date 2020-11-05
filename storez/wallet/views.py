@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import UserAccount
+from .models import UserAccount, ManagerAccount
 import random
 
 import string
@@ -24,5 +24,23 @@ def createUserAccount(user):
 
     except Exception as e:
         logger.error("createUserAccount@Error")
+        logger.error(e)
+        return None
+
+
+def createManagerAccount(manager):
+    try:
+        if manager is None:
+            return None
+
+        manageraccount = ManagerAccount(manager=manager)       
+        manageraccount.balance = 0
+
+        manageraccount.save()
+
+        return manageraccount
+
+    except Exception as e:
+        logger.error("createManagerAccount@Error")
         logger.error(e)
         return None

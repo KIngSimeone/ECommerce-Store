@@ -21,7 +21,7 @@ from workflows.authentication_workflow import (
                                                authenticateManagerRouter,
                                                authenticateControllerRouter
                                               )
-from workflows.userAccount_workflow import userAccountRouter
+from workflows.userAccount_workflow import userAccountRouter,managerAccountRouter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,5 +32,6 @@ urlpatterns = [
     path('authenticate/controller/',authenticateControllerRouter,name="controllerauthentication-router"),
 
     # account-related endpoints
-    path('users/', userAccountRouter, name="user-Router")
+    path('users/', userAccountRouter, name="user-Router"),
+    path('managers/',managerAccountRouter, name="manager-Router")
 ]

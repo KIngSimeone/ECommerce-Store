@@ -55,3 +55,14 @@ def transformUser(user):
         "phone": user.phone,
         "createdAt": toUiReadableDateFormat(user.createdAt)        
     }
+
+def transformManager(manager):
+    return {
+        "id": manager.id,
+        "firstName": manager.firstName,
+        "lastName": manager.lastName,
+        "userName": manager.userName,
+        "email": manager.email,
+        "phone": manager.phone,
+        "createdAt": toUiReadableDateFormat(manager.createdAt)        
+    }

@@ -11,7 +11,8 @@ from account.views import (
                           )
 
 from apiutility.responses import (
-                                  badRequestResponse
+                                  badRequestResponse,
+                                  successResponse
                                  )
 
 from dataTransformer.jsonTransformer import (
@@ -48,8 +49,6 @@ def authenticateControllerRouter(request):
     if request.method == 'POST':
         ## call authenticate
         return loginController(request)
-
-
 
 
 

@@ -37,7 +37,6 @@ def createManagerAccount(manager):
         manageraccount.balance = 0
 
         manageraccount.save()
-
         return manageraccount
 
     except Exception as e:

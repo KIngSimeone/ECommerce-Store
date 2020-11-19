@@ -29,6 +29,7 @@ class BusinessAddress(models.Model):
         address = str(self.business) + "'s Address"
         return address
 
+
 class Product(models.Model):
     business = models.ForeignKey(Business, on_delete=models.SET_NULL, null=True)
     productName = models.TextField(max_length=254)

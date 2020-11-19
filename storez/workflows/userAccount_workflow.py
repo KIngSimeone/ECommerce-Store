@@ -14,7 +14,9 @@ from account.views import (
                            getManagerByPhone,
                            getControllerByUserName,
                            getControllerByEmail,
-                           getControllerByPhone
+                           getControllerByPhone,
+                           getUserByAccessToken,
+                           getUserById,
                           )
                            
 from wallet.views import (
@@ -36,8 +38,8 @@ from apiutility.responses import (
 
 from apiutility.validators import (
                                   validateKeys, 
-                                  validateEmailFormat, 
-                                  validatePhoneFormat, 
+                                  validateEmailFormat,
+                                  validatePhoneFormat,
                                   validateThatAStringIsClean,
                                   validateThatStringIsEmptyAndClean,
                                   validateThatStringIsEmpty    
@@ -47,7 +49,10 @@ from error.errorCodes import (
                               ErrorCodes,
                               getGenericInvalidParametersErrorPacket,
                               getUserAlreadyExistErrorPacket,
-                              getUserCreationFailedErrorPacket
+                              getUserCreationFailedErrorPacket,
+                              getUnauthenticatedErrorPacket,
+                              getUserDoesNotExistErrorPacket,
+                              getUserUpdateFailedErrorPacket
                              )
 from dataTransformer.jsonTransformer import (
                                             transformUser,
@@ -268,3 +273,92 @@ def createController(request):
     createAccount = createControllerAccount(controller=createdController)
 
     return successResponse(message="successfully created controller", body=transformController(createdController))
+
+
+
+# update user
+def updateUser(request, userID):
+    # verify that the calling user has a valid token
+    body = json.loads(request.body)
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
+                                       message=getUnauthenticatedErrorPacket())
+
+    # validate to ensure that all required fields are present
+    if 'password' in body:
+        keys = ['email', 'userName', 'firstName',
+                 'lastName', 'password', 'phone']
+
+    else:
+        keys = ['email', 'userName', 'firstName',
+                 'lastName', 'phone']
+
+    # check if required fields are present in request payload
+    missingKeys = validateKeys(payload=body, requiredKeys=keys)
+    if missingKeys:
+        return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
+
+    # check if userToBeUpdated already exists
+    userToBeUpdated = getUserById(userID)
+    if userToBeUpdated is None:
+        return resourceNotFoundResponse(ErrorCodes.USER_DOES_NOT_EXIST, getUserDoesNotExistErrorPacket())
+
+    # validate if the email is in the correct format
+    if not validateEmailFormat(body['email']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket("Email format is invalid"))
+
+    # validate if the phone is in the correct format
+    if not validatePhoneFormat(body['phone']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket("Phone format is invalid"))
+
+    if not validateThatStringIsEmptyAndClean(body['firstName']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket( "First name cannot be empty or contain special characters"))
+
+    if not validateThatStringIsEmptyAndClean(body['lastName']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket("Last name cannot be empty or contain special characters"))
+    
+     # check that username specified does not belong to another user
+    userName = getUserByUserName(
+        userName=body['userName'])
+    if userName != None:
+        if userName.id != userToBeUpdated.id:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+                                            message=getUserAlreadyExistErrorPacket(value="username"))
+
+    # check that email specified does not belong to another user
+    userEmail = getUserByEmail(body['email'])
+    if userEmail != None:
+        if userEmail.id != userToBeUpdated.id:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+                                            message=getUserAlreadyExistErrorPacket(value="email"))
+
+    # check that phone specified does not belong to another user
+    userPhone = getUserByPhone(phone=body['phone'])
+    if userPhone != None:
+        if userPhone.id != userToBeUpdated.id:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+                                            message=getUserAlreadyExistErrorPacket(value="phone"))
+
+
+        if 'password' in body:
+            updatedUser = updateUserRecord(userToBeUpdated, firstName=body['firstName'], lastName=body['lastName'],
+                                        userName=body['userName'], email=body['email'],
+                                        password=body['password'], phone=body['phone']
+                                        )
+
+        else:
+            updatedUser = updateUserRecord(userToBeUpdated, firstName=body['firstName'], lastName=body['lastName'],
+                                        userName=body['userName'], email=body['email'],
+                                        phone=body['phone']
+                                    )
+
+    if updatedUser == None:
+        return internalServerErrorResponse(ErrorCodes.USER_UPDATE_FAILED,
+                                           message=getUserUpdateFailedErrorPacket())

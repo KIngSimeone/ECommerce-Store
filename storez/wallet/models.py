@@ -7,8 +7,6 @@ from account.models import (
                             )
                             
 
-
-
 # Create your models here.
 
 class UserAccount(models.Model):
@@ -44,5 +42,6 @@ class ControllerAccount(models.Model):
     updatedAt = models.DateField("updated_at", auto_now=True)
 
     def __str__(self):
-        account = str(self.manager) + "'s Account"
+        
+        account = str(self.controller) + "'s Account"
         return account

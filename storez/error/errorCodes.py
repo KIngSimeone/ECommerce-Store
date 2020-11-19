@@ -10,6 +10,15 @@ class ErrorCodes(IntEnum):
     GENERIC_INVALID_PARAMETERS = 5
 
     INVALID_CREDENTIALS = 25
+    USER_ALREADY_EXIST = 26
+    PASSWORD_RESET_FAILED = 27
+    USER_DOES_NOT_EXIST = 28
+    USER_WITH_USERNAME_ALREADY_EXIST = 29
+    USER_CATEGORY_TYPE_INVALID = 30
+    USER_WITH_EMAIL_ALREADY_EXIST = 31
+    USER_CREATION_FAILED = 32
+    USER_UPDATE_FAILED = 33
+    USER_DELETION_FAILED = 34
 
 
 class DefaultErrorMessages(str, Enum):
@@ -31,7 +40,7 @@ class DefaultErrorMessages(str, Enum):
     USER_CREATION_FAILED = "Something went wrong, could not create the user successfully"
     USER_UPDATE_FAILED = "Something went wrong, could not update the user successfully"
     USER_DELETION_FAILED = "Something went wrong, could not delete the user successfully"
-    PASSWORD_RESET_FAILED = "Something went wrong, attempt to reset the password was unsuccessful"
+    PASSWORD_RESET_FAILED = "Something went wrong, attempt to res et the password was unsuccessful"
 
     INVALID_COUNTRY_CODE = "The country code specified is invalid"
     INVALID_CURRENCY_CODE = "The currency code specified is invalid"
@@ -39,6 +48,16 @@ class DefaultErrorMessages(str, Enum):
     ORDER_CREATION_FAILED = "Something went wrong, could not create the order for merchant successfully"
     ORDER_DELETION_FAILED = "Something went wrong, could not delete the order for merchant successfully"
     ORDER_DOES_NOT_EXIST = "The requested order does not exist"
+
+
+# AUTH ERROR PACKET
+def getUnauthenticatedErrorPacket():
+    return getError(code = ErrorCodes.UNAUTHENTICATED_REQUEST,
+                    defaultMessage = DefaultErrorMessages.UNATHENTICATED_REQUEST)
+
+def getUnauthorizedErrorPacket():
+    return getError(code = ErrorCodes.UNAUTHORIZED_REQUEST,
+                    defaultMessage = DefaultErrorMessages.UNAUTHORIZED_REQUEST)
 
 
 
@@ -51,16 +70,25 @@ def getUserAlreadyExistErrorPacket(value):
     return getError(code = ErrorCodes.USER_ALREADY_EXIST, 
                     defaultMessage = DefaultErrorMessages.USER_ALREADY_EXIST.format(value))
 
+def getUserDoesNotExistErrorPacket():
+    return getError(code=ErrorCodes.USER_DOES_NOT_EXIST,
+                    defaultMessage = DefaultErrorMessages.USER_DOES_NOT_EXIST)
+
+
 ## Manager already exist error packet
 def getManagerAlreadyExistErrorPacket(value):
     return getError(code = ErrorCodes.USER_ALREADY_EXIST, 
                     defaultMessage = DefaultErrorMessages.USER_ALREADY_EXIST.format(value))
 
 def getUserCreationFailedErrorPacket():
-    return getError(code=ErrorCodes.USER_CREATION_FAILED, 
+    return getError(code=ErrorCodes.USER_CREATION_FAILED,
                     defaultMessage=DefaultErrorMessages.USER_CREATION_FAILED)
 
-## generic invalid errors
+def getUserUpdateFailedErrorPacket():
+    return getError(code=ErrorCodes.USER_UPDATE_FAILED, 
+                        defaultMessage=DefaultErrorMessages.USER_UPDATE_FAILED)
+
+## generic invalid error
 def getGenericInvalidParametersErrorPacket(message):
     return getError(code=ErrorCodes.GENERIC_INVALID_PARAMETERS, defaultMessage=message)
 
@@ -68,8 +96,8 @@ def getGenericInvalidParametersErrorPacket(message):
 ## base error
 def getError(code, defaultMessage):
     try:
-        errorRecord, _ = Error.objects.get_or_create(code=code.value, description=defaultMessage.value)
+        errorRecord, _ = Error.objects.get_or_create(code=code.value, description=defaultMessage)
         return {'errorCode': errorRecord.code, 'message': errorRecord.description}
 
     except IntegrityError:
-        return {'errorCode': code.value, 'message': defaultMessage.value}
+        return {'errorCode': code.value, 'message': defaultMessage}

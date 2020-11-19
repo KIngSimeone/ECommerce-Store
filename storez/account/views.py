@@ -113,7 +113,7 @@ def generateUserAccessToken(user):
 
 def generateManagerAccessToken(manager):
     try:
-        # confrim that manager isn't none
+        # confrim that msanager isn't none
         if manager is None:
             return None
 
@@ -329,6 +329,71 @@ def getControllerByAccessToken(accessToken):
     except ControllerAccessTokens.DoesNotExist:
         print('getControllerByAccessToken@error')
         return None
+
+def updateUser(user, firstName, lastName, userName, email, phone, password=None):
+    try:
+        user.firstName = firstName
+        user.lastName = lastName
+        user.userName = userName
+        user.email = email
+        user.phone = phone
+
+        if password:
+            hashedPassword = make_password(password)
+
+            user.password = hashedPassword
+
+        user.save()
+        return user
+
+    except Exception as err:
+        logger.error('updateUser@error')
+        logger.error(err)
+        return None
+
+def updateManager(manager, firstName, lastName, userName, email, phone, password=None):
+    try:
+        manager.firstName = firstName
+        manager.lastName = lastName
+        manager.userName = userName
+        manager.email = email
+        manager.phone = phone
+
+        if password:
+            hashedPassword = make_password(password)
+
+            manager.password = hashedPassword
+
+        manager.save()
+        return manager
+
+    except Exception as err:
+        logger.error('updateManager@error')
+        logger.error(err)
+        return None
+
+
+def updateController(controller, firstName, lastName, userName, email, phone, password=None):
+    try:
+        controller.firstName = firstName
+        controller.lastName = lastName
+        controller.userName = userName
+        controller.email = email
+        controller.phone = phone
+
+        if password:
+            hashedPassword = make_password(password)
+
+            controller.password = hashedPassword
+
+        controller.save()
+        return controller
+
+    except Exception as err:
+        logger.error('updateController@error')
+        logger.error(err)
+        return None
+
 
 def getUserByEmail(email):
     try:

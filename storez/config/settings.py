@@ -35,8 +35,8 @@ ALLOWED_HOSTS = splittedHosts
 
 
 DURATION = env('DURATION')
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',
@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'dataTransformer',
     'error',
     'workflows'
-
 ]
 
 MIDDLEWARE = [

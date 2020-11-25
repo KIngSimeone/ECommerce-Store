@@ -147,10 +147,11 @@ def createUser(request):
     if not confirmedUserCategoryTypeValidity:
         return badRequestResponse(errorCode=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
                                 message=getUserCategoryInvalidErrorPacket())
+
     createdUser = createUserRecord(firstName=body['firstName'],lastName=body['lastName'],
                                     userName=body['userName'], email=body['email'],
                                     password=body['password'], phone=body['phone'],
-                                    userCategoryType=userCategoryType
+                                    userCategoryType=body['userCategoryType']
                                 )
 
     if createdUser == None:

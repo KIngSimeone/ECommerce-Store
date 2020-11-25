@@ -178,7 +178,7 @@ def generateControllerAccessToken(controller):
         return None
 """
 # Create User
-def createUser(firstName, lastName, userName, email, password, phone):
+def createUser(firstName, lastName, userName, email, password, phone,userCategoryType):
     try:
         user = User(
             firstName=firstName,

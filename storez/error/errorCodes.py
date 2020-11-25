@@ -19,7 +19,6 @@ class ErrorCodes(IntEnum):
     USER_CREATION_FAILED = 32
     USER_UPDATE_FAILED = 33
     USER_DELETION_FAILED = 34
-    USER_CATEGORY_TYPE_INVALID = 35
 
 
 class DefaultErrorMessages(str, Enum):
@@ -40,7 +39,6 @@ class DefaultErrorMessages(str, Enum):
     USER_WITH_EMAIL_ALREADY_EXIST = "A user with same email already exist"
     USER_CREATION_FAILED = "Something went wrong, could not create the user successfully"
     USER_UPDATE_FAILED = "Something went wrong, could not update the user successfully"
-    USER_CATEGORY_TYPE_INVALID = "The specified user category type is invalid"
     USER_DELETION_FAILED = "Something went wrong, could not delete the user successfully"
     PASSWORD_RESET_FAILED = "Something went wrong, attempt to res et the password was unsuccessful"
 

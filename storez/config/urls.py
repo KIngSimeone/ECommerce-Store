@@ -17,23 +17,24 @@ from django.contrib import admin
 from django.urls import path
 
 from workflows.authentication_workflow import (
-                                               authenticationRouter,
-                                               authenticateManagerRouter,
-                                               authenticateControllerRouter
+                                               authenticationRouter
+                                               #authenticateManagerRouter,
+                                               #authenticateControllerRouter
                                               )
-from workflows.userAccount_workflow import userAccountRouter,managerAccountRouter,controllerAccountRouter
+from workflows.userAccount_workflow import userAccountRouter#managerAccountRouter,controllerAccountRouter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # authentication endpoints
     path('authenticate/',authenticationRouter,name="userauthentication-router"),
-    path('authenticate/manager/',authenticateManagerRouter,name="managerauthentication-router"),
-    path('authenticate/controller/',authenticateControllerRouter,name="controllerauthentication-router"),
+
+    #path('authenticate/manager/',authenticateManagerRouter,name="managerauthentication-router"),
+    #path('authenticate/controller/',authenticateControllerRouter,name="controllerauthentication-router"),
 
     # account-related endpoints
     path('users/', userAccountRouter, name="user-Router"),
-    path('managers/',managerAccountRouter, name="manager-Router"),
-    path('controllers/',controllerAccountRouter, name="controller-Router")
+    #path('managers/',managerAccountRouter, name="manager-Router"),
+    #path('controllers/',controllerAccountRouter, name="controller-Router")
 
 ]

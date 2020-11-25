@@ -27,7 +27,7 @@ def createUserAccount(user):
         logger.error(e)
         return None
 
-
+"""
 def createManagerAccount(manager):
     try:
         if manager is None:
@@ -61,3 +61,4 @@ def createControllerAccount(controller):
         logger.error("createControllerrAccount@Error")
         logger.error(e)
         return None
+"""

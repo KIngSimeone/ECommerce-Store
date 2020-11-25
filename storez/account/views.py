@@ -44,6 +44,7 @@ def authenticateUser(email, password):
     except User.DoesNotExist:
         return None
 
+"""
 def authenticateManager(email, password):
     try:
         # retrieve manager by email
@@ -77,7 +78,7 @@ def authenticateController(email, password):
 
     except Controller.DoesNotExist:
         return None
-
+"""
 def generateUserAccessToken(user):
     try:
         # confirm that the user isn't none
@@ -110,7 +111,7 @@ def generateUserAccessToken(user):
         logger.error(e)
         return None
 
-
+"""
 def generateManagerAccessToken(manager):
     try:
         # confrim that msanager isn't none
@@ -174,7 +175,7 @@ def generateControllerAccessToken(controller):
         logger.error("generateControllerAccessToken@Error")
         logger.error(e)
         return None
-
+"""
 # Create User
 def createUser(firstName, lastName, userName, email, password, phone):
     try:
@@ -198,7 +199,7 @@ def createUser(firstName, lastName, userName, email, password, phone):
         logger.error(err)
         return None
 
-
+"""
 # Create Manager
 def createManager(firstName, lastName, userName, email, password, phone):
     try:
@@ -247,7 +248,7 @@ def createController(firstName, lastName, userName, email, password, phone):
         return None
 
 
-
+"""
 def getUserByAccessToken(accessToken):
     try:
         userAccessTokenRecord = UserAccessTokens.objects.filter(
@@ -274,7 +275,7 @@ def getUserByAccessToken(accessToken):
     except UserAccessTokens.DoesNotExist:
         print('getUserByAccessToken@error')
         return None
-
+"""
 def getManagerByAccessToken(accessToken):
     try:
         managerAccessTokenRecord = ManagerAccessTokens.objects.filter(
@@ -329,7 +330,7 @@ def getControllerByAccessToken(accessToken):
     except ControllerAccessTokens.DoesNotExist:
         print('getControllerByAccessToken@error')
         return None
-
+"""
 def updateUser(user, firstName, lastName, userName, email, phone, password=None):
     try:
         user.firstName = firstName
@@ -351,6 +352,7 @@ def updateUser(user, firstName, lastName, userName, email, phone, password=None)
         logger.error(err)
         return None
 
+"""
 def updateManager(manager, firstName, lastName, userName, email, phone, password=None):
     try:
         manager.firstName = firstName
@@ -394,7 +396,7 @@ def updateController(controller, firstName, lastName, userName, email, phone, pa
         logger.error(err)
         return None
 
-
+"""
 def getUserByEmail(email):
     try:
         return User.objects.get(email=email)
@@ -439,6 +441,7 @@ def getUserByPhone(phone):
         logger.error(err)
         return None
 
+"""
 ## Manager functions
 
 def getManagerByEmail(email):
@@ -531,5 +534,6 @@ def getControllerByPhone(phone):
         logger.error(err)
         return None
 
+"""
 def getExpiresAt():
     return (timezone.now() + timedelta(minutes=eval(settings.DURATION)))

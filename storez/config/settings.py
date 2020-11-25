@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'business',
     'account',
     'cart',
-    'control',
     'wallet',
     'order',
     'apiutility',

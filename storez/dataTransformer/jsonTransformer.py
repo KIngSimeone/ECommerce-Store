@@ -15,7 +15,7 @@ def generateLoginResponse(user, userAccessToken):
 
     return user
 
-
+"""
 def generateLoginResponseManager(manager, managerAccessToken):
     manager = {
         "id": manager.id,
@@ -44,6 +44,7 @@ def generateLoginResponseController(controller, controllerAccessToken):
     }
 
     return controller
+"""
 
 def transformUser(user):
     return {
@@ -56,6 +57,7 @@ def transformUser(user):
         "createdAt": toUiReadableDateFormat(user.createdAt)        
     }
 
+"""
 def transformManager(manager):
     return {
         "id": manager.id,
@@ -77,3 +79,5 @@ def transformController(controller):
         "phone": controller.phone,
         "createdAt": toUiReadableDateFormat(controller.createdAt)        
     }
+
+"""

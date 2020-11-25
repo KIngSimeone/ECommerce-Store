@@ -4,26 +4,26 @@ from django.conf import settings
 
 from account.views import (
                            createUser as createUserRecord,
-                           createManager as createManagerRecord,
-                           createController as createControllerRecord,
+                           #createManager as createManagerRecord,
+                           #createController as createControllerRecord,
                            getUserByUserName,
                            getUserByEmail,
                            getUserByPhone,
-                           getManagerByUserName,
-                           getManagerByEmail,
-                           getManagerByPhone,
-                           getControllerByUserName,
-                           getControllerByEmail,
-                           getControllerByPhone,
+                           #getManagerByUserName,
+                           #getManagerByEmail,
+                           #getManagerByPhone,
+                           #getControllerByUserName,
+                           #getControllerByEmail,
+                           #getControllerByPhone,
                            getUserByAccessToken,
                            getUserById,
-                           getManagerByAccessToken
+                           #getManagerByAccessToken
                           )
                            
 from wallet.views import (
                           createUserAccount,
-                          createManagerAccount,
-                          createControllerAccount
+                          #createManagerAccount,
+                          #createControllerAccount
                          )
 
 from apiutility.responses import (
@@ -57,8 +57,8 @@ from error.errorCodes import (
                              )
 from dataTransformer.jsonTransformer import (
                                             transformUser,
-                                            transformManager,
-                                            transformController
+                                            #transformManager,
+                                            #transformController
                                             )
 
 # import the logging library
@@ -72,6 +72,7 @@ def userAccountRouter(request):
     if request.method == "POST":
         return createUser(request)
 
+"""
 # handles "/managers/" endpoint requests
 def managerAccountRouter(request):
     if request.method == "POST":
@@ -81,7 +82,7 @@ def managerAccountRouter(request):
 def controllerAccountRouter(request):
     if request.method == "POST":
         return createController(request)
-
+"""
 
 
 # Create User
@@ -147,7 +148,7 @@ def createUser(request):
 
     return successResponse(message="successfully created user", body=transformUser(createdUser))
 
-
+"""
 # Create Manager
 def createManager(request):
     # get Json information passed in
@@ -275,7 +276,7 @@ def createController(request):
 
     return successResponse(message="successfully created controller", body=transformController(createdController))
 
-
+"""
 
 # update user
 def updateUser(request, userID):
@@ -364,7 +365,7 @@ def updateUser(request, userID):
         return internalServerErrorResponse(ErrorCodes.USER_UPDATE_FAILED,
                                            message=getUserUpdateFailedErrorPacket())
 
-
+"""
 # update manager
 def updateManager(request, managerID):
     # verify that the calling user has a valid token
@@ -378,7 +379,6 @@ def updateManager(request, managerID):
 
     # validate to ensure that all required fields are present
     if 'password' in body:
-        keys = ['email', 'userName', 'firstName',
                  'lastName', 'password', 'phone']
 
     else:
@@ -451,3 +451,5 @@ def updateManager(request, managerID):
     if updatedUser == None:
         return internalServerErrorResponse(ErrorCodes.USER_UPDATE_FAILED,
                                            message=getUserUpdateFailedErrorPacket())
+
+    """

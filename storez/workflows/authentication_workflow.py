@@ -4,10 +4,10 @@ import json
 from account.views import (
                            authenticateUser,
                            generateUserAccessToken,
-                           authenticateManager,
-                           generateManagerAccessToken,
-                           authenticateController,
-                           generateControllerAccessToken  
+                           #authenticateManager,
+                           #generateManagerAccessToken,
+                           #authenticateController,
+                           #generateControllerAccessToken  
                           )
 
 from apiutility.responses import (
@@ -17,8 +17,8 @@ from apiutility.responses import (
 
 from dataTransformer.jsonTransformer import (
                                              generateLoginResponse,
-                                             generateLoginResponseManager,
-                                             generateLoginResponseController
+                                             #generateLoginResponseManager,
+                                             #generateLoginResponseController
                                             )
 from apiutility.validators import validateKeys, validateThatStringIsEmpty
 from error.errorCodes import (
@@ -38,6 +38,7 @@ def authenticationRouter(request):
         ## call authenticate
         return login(request)
 
+"""
 # handle manager "/autenticate/manager" route
 def authenticateManagerRouter(request):
     if request.method == 'POST':
@@ -49,7 +50,7 @@ def authenticateControllerRouter(request):
     if request.method == 'POST':
         ## call authenticate
         return loginController(request)
-
+"""
 
 
 # Authenticate User
@@ -83,7 +84,7 @@ def login(request):
 
     return successResponse(message="successfully authenticated", body= generateLoginResponse(user, userAccessToken))
 
-
+"""
 # Authenticate Manager
 def loginManager(request):
     body = json.loads(request.body)
@@ -146,3 +147,5 @@ def loginController(request):
     controllerAccessToken = generateControllerAccessToken(controller)
 
     return successResponse(message="successfully authenticated", body=generateLoginResponseController(controller, controllerAccessToken))
+
+"""

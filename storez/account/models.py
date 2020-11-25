@@ -11,7 +11,7 @@ class User(models.Model):
     password = models.TextField()
     phone = models.TextField()
 
-    userCategoryType=models.TextField('user_category_type', default='model')
+    userCategoryType=models.TextField('user_category_type', default='customer')
     
     isActive = models.BooleanField("is_active", default=True)
     isDeleted = models.BooleanField("is_deleted", default=False)

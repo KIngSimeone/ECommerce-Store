@@ -54,7 +54,8 @@ from error.errorCodes import (
                               getUserCreationFailedErrorPacket,
                               getUnauthenticatedErrorPacket,
                               getUserDoesNotExistErrorPacket,
-                              getUserUpdateFailedErrorPacket
+                              getUserUpdateFailedErrorPacket,
+                              getUserCategoryInvalidErrorPacket
                              )
 from dataTransformer.jsonTransformer import (
                                             transformUser,

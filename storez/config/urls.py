@@ -33,8 +33,7 @@ urlpatterns = [
 
     # account-related endpoints
     path('users/', userAccountRouter, name="user-Router"),
-    path('users/<int:userId>/', singleUserAccountRouter, name="singleUserAccount-router"),
+    path('users/<int:userID>/', singleUserAccountRouter, name="singleUserAccount-router"),
     #path('managers/',managerAccountRouter, name="manager-Router"),
     #path('controllers/',controllerAccountRouter, name="controller-Router")
-
 ]

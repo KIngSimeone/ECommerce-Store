@@ -4,6 +4,7 @@ from django.conf import settings
 
 from account.views import (
                            createUser as createUserRecord,
+                           updateUser as updateUserRecord,
                            #createManager as createManagerRecord,
                            #createController as createControllerRecord,
                            getUserByUserName,
@@ -305,7 +306,7 @@ def updateUser(request, userID):
     body = json.loads(request.body)
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
-
+   
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
                                        message=getUnauthenticatedErrorPacket())
@@ -313,11 +314,11 @@ def updateUser(request, userID):
     # validate to ensure that all required fields are present
     if 'password' in body:
         keys = ['email', 'userName', 'firstName',
-                 'lastName', 'password', 'phone']
+                 'lastName', 'password', 'phone', 'userCategoryType']
 
     else:
         keys = ['email', 'userName', 'firstName',
-                 'lastName', 'phone']
+                 'lastName', 'phone', 'userCategoryType']
 
     # check if required fields are present in request payload
     missingKeys = validateKeys(payload=body, requiredKeys=keys)
@@ -385,18 +386,19 @@ def updateUser(request, userID):
         if 'password' in body:
             updatedUser = updateUserRecord(userToBeUpdated, firstName=body['firstName'], lastName=body['lastName'],
                                         userName=body['userName'], email=body['email'],
-                                        password=body['password'], phone=body['phone']
+                                        password=body['password'], phone=body['phone'], userCategoryType=body['userCategoryType']
                                         )
 
         else:
             updatedUser = updateUserRecord(userToBeUpdated, firstName=body['firstName'], lastName=body['lastName'],
                                         userName=body['userName'], email=body['email'],
-                                        phone=body['phone']
+                                        phone=body['phone'], userCategoryType=body['userCategoryType']
                                     )
-
+    
     if updatedUser == None:
         return internalServerErrorResponse(ErrorCodes.USER_UPDATE_FAILED,
                                            message=getUserUpdateFailedErrorPacket())
+    return successResponse(message="successfully updated user", body=transformUser(updatedUser))
 
 """
 # update manager

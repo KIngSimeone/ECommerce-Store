@@ -539,3 +539,6 @@ def getControllerByPhone(phone):
 """
 def getExpiresAt():
     return (timezone.now() + timedelta(minutes=eval(settings.DURATION)))
+
+def getLastActiveForwarding():
+    return (timezone.now() + timedelta(minutes=eval(settings.DURATION)))

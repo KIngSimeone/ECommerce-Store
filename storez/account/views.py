@@ -332,7 +332,7 @@ def getControllerByAccessToken(accessToken):
         print('getControllerByAccessToken@error')
         return None
 """
-def updateUser(user, firstName, lastName, userName, email, phone, password=None):
+def updateUser(user, firstName, lastName, userName, email, phone, userCategoryType, password=None):
     try:
         user.firstName = firstName
         user.lastName = lastName

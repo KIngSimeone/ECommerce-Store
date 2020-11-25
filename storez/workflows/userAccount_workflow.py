@@ -74,6 +74,14 @@ def userAccountRouter(request):
     if request.method == "POST":
         return createUser(request)
 
+# handles "/users/<int:userID>/" requests
+def singleUserAccountRouter(request, userID):
+    if request.method == "GET":
+        return getUser(request, userID)
+
+    elif request.method == "PUT":
+        return updateUser(request, userID)
+
 """
 # handles "/managers/" endpoint requests
 def managerAccountRouter(request):
@@ -339,7 +347,19 @@ def updateUser(request, userID):
         return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                   message=getGenericInvalidParametersErrorPacket("Last name cannot be empty or contain special characters"))
     
-     # check that username specified does not belong to another user
+    # check that the user category type specified is correct
+    confirmedUserCategoryTypeValidity = False
+    for categoryType in UserCategoryType:
+        if categoryType.value == body['userCategoryType'].lower():
+            confirmedUserCategoryTypeValidity = True
+            userCategoryType = categoryType.value
+
+    if not confirmedUserCategoryTypeValidity:
+        return badRequestResponse(errorCode=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
+                                message=getUserCategoryInvalidErrorPacket())
+
+
+    # check that username specified does not belong to another user
     userName = getUserByUserName(
         userName=body['userName'])
     if userName != None:

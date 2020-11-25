@@ -296,3 +296,20 @@ def getAllUsers(request):
                             body=transformUsersList(paginated_UsersList), 
                             pagination=paginationDetails
                         )
+
+def getUser(request, userID):
+    # verify that the calling user has a valid token
+    token = request.headers.get('accesToken')
+    user = getUserByAccessToken(token)
+    print(user)
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
+    
+    #check if the user exists and retrieve
+    userToBeRetrieved = getUserById(userID)
+    if userToBeRetrieved == None:
+        return resourceNotFoundResponse(ErrorCodes.USER_DOES_NOT_EXIST,
+                                        message=getUserDoesNotExistErrorPacket())
+
+    return successResponse(message="successfully retrieved user", body=transformUser(userToBeRetrieved))
+

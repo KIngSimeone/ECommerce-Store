@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.timezone import now
-from account.models import Manager
+from account.models import User
 
 class Business(models.Model):
     id = models.AutoField(primary_key=True)
-    manager = models.ForeignKey(Manager, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     businessName = models.TextField(max_length=254)
     businessEmail = models.EmailField(max_length=254)
     businessPhone = models.TextField()
@@ -17,7 +17,7 @@ class Business(models.Model):
         return name
 
 class BusinessAddress(models.Model):
-    manager = models.ForeignKey(Manager, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     business = models.ForeignKey(Business, on_delete=models.SET_NULL, null=True)
     street = models.TextField(null=False)
     city = models.CharField(max_length=64, null=False)

@@ -10,6 +10,9 @@ class User(models.Model):
     email = models.EmailField(max_length=254)
     password = models.TextField()
     phone = models.TextField()
+
+    userCategoryType=models.TextField('user_category_type', default='model')
+    
     isActive = models.BooleanField("is_active", default=True)
     isDeleted = models.BooleanField("is_deleted", default=False)
     createdAt = models.DateField("created_at", auto_now_add=True)

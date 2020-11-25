@@ -13,6 +13,7 @@ from .models import(
 from django.utils import timezone
 from datetime import datetime, date, timedelta
 from django.conf import settings
+from account.userCategoryType import UserCategoryType
 from django.contrib.auth.hashers import make_password, check_password
 
 # import bcrypt
@@ -185,7 +186,7 @@ def createUser(firstName, lastName, userName, email, password, phone):
             userName=userName,
             email=email,
             phone=phone,
-    
+            userCategoryType = userCategoryType
         )
 
         # create and store password hash
@@ -338,6 +339,7 @@ def updateUser(user, firstName, lastName, userName, email, phone, password=None)
         user.userName = userName
         user.email = email
         user.phone = phone
+        user.userCategoryType = userCategoryType
 
         if password:
             hashedPassword = make_password(password)

@@ -20,6 +20,7 @@ from account.views import (
                            #getManagerByAccessToken
                           )
                            
+from account.userCategoryType import UserCategoryType
 from wallet.views import (
                           createUserAccount,
                           #createManagerAccount,
@@ -135,10 +136,20 @@ def createUser(request):
         return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('phone'))
 
+    # check that the user category type specified is correct
+    confirmedUserCategoryTypeValidity = False
+    for categoryType in UserCategoryType:
+        if categoryType.value == body['userCategoryType'].lower():
+            confirmedUserCategoryTypeValidity = True
+            userCategoryType = categoryType.value
 
+    if not confirmedUserCategoryTypeValidity:
+        return badRequestResponse(errorCode=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
+                                message=getUserCategoryInvalidErrorPacket())
     createdUser = createUserRecord(firstName=body['firstName'],lastName=body['lastName'],
                                     userName=body['userName'], email=body['email'],
                                     password=body['password'], phone=body['phone'],
+                                    userCategoryType=userCategoryType
                                 )
 
     if createdUser == None:

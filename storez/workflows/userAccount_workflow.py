@@ -10,6 +10,7 @@ from account.views import (
                            getUserByPhone,
                            getUserByAccessToken,
                            getUserById,
+                           listAllUsers
                           )
                            
 from account.userCategoryType import UserCategoryType
@@ -43,13 +44,14 @@ from error.errorCodes import (
                               getUserAlreadyExistErrorPacket,
                               getUserCreationFailedErrorPacket,
                               getUnauthenticatedErrorPacket,
+                              getUnauthorizedErrorPacket,
                               getUserDoesNotExistErrorPacket,
                               getUserUpdateFailedErrorPacket,
                               getUserCategoryInvalidErrorPacket
                              )
-from dataTransformer.jsonTransformer import (
-                                            transformUser,
-                                            )
+from dataTransformer.jsonTransformer import transformUser,transformUsersList
+from django.core.paginator import Paginator
+                                            
 
 # import the logging library
 import logging
@@ -59,7 +61,10 @@ logger = logging.getLogger(__name__)
 
 # handles "/users/" endpoint requests
 def userAccountRouter(request):
-    if request.method == "POST":
+    if request.method == "GET":
+        return getAllUsers(request)
+
+    elif request.method == "POST":
         return createUser(request)
 
 # handles "/users/<int:userID>/" requests
@@ -243,3 +248,51 @@ def updateUser(request, userID):
         return internalServerErrorResponse(ErrorCodes.USER_UPDATE_FAILED,
                                            message=getUserUpdateFailedErrorPacket())
     return successResponse(message="successfully updated user", body=transformUser(updatedUser))
+
+
+def getAllUsers(request):
+    # verify that the calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
+    
+    #Check if user has the privilege to read the resource
+    if user.userCategoryType != 'controller':
+        return unAuthorizedResponse(ErrorCodes.UNAUTHORIZED_REQUEST, message=getUnauthorizedErrorPacket())
+
+    # retrieve a list of all users
+    allUsersList = listAllUsers()
+
+    # Paginate the retrieved users
+    if request.GET.get('pageBy'):
+        pageBy = request.GET.get('pageBy')
+    else:
+        pageBy = 10
+
+    paginator = Paginator(allUsersList, pageBy)
+
+    if request.GET.get('page'):
+        pageNum = request.GET.get('page')
+    else:
+        pageNum = 1
+    
+    # try if the page requested exists or is empty
+    try:
+        paginated_UsersList = paginator.page(pageNum)
+
+        paginationDetails = {
+            "totalPages": paginator.num_pages,
+            "limit": pageBy,
+            "currentPage": pageNum
+        }
+    except Exception as e:
+        print(e)
+        paginated_UsersList = []
+        paginationDetails = {}
+
+    return paginatedResponse(message="successfully retrieved users", 
+                            body=transformUsersList(paginated_UsersList), 
+                            pagination=paginationDetails
+                        )

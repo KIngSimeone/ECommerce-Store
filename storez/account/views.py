@@ -144,6 +144,13 @@ def updateUser(user, firstName, lastName, userName, email, phone, userCategoryTy
         logger.error(err)
         return None
 
+def listAllUsers():
+    try:
+        return User.objects.filter(isDeleted=False)
+    except Exception as err:
+        logger.error('listAllUsers@error')
+        logger.error(err)
+        return None
 
 def getUserByEmail(email):
     try:

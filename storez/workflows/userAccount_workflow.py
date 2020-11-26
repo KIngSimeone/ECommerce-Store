@@ -48,7 +48,9 @@ from error.errorCodes import (
                               getUnauthorizedErrorPacket,
                               getUserDoesNotExistErrorPacket,
                               getUserUpdateFailedErrorPacket,
-                              getUserCategoryInvalidErrorPacket
+                              getUserCategoryInvalidErrorPacket,
+                              getPasswordResetFailedErrorPacket,
+                              getUserPasswordResetTokenByResetToken
                              )
 from dataTransformer.jsonTransformer import transformUser,transformUsersList
 from django.core.paginator import Paginator
@@ -323,7 +325,7 @@ def deleteUser(request, userID):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
-    print(user)
+
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
                                        message=getUnauthenticatedErrorPacket())
@@ -345,3 +347,26 @@ def deleteUser(request, userID):
                                             message=getUserDeletionFailedErrorPacket())
 
     return successResponse(message="Successfully deleted user", body={})
+
+
+def passwordReset(request):
+    body = json.loads(request.body)
+
+    # check if required fields are present in request payload
+    missingKeys = validateKeys(
+        payload=body, requiredKeys=['token', 'password'])
+    if missingKeys:
+        return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
+
+    userPasswordResetToken = getUserPasswordResetTokenByResetToken(body['token'])
+    if userPasswordResetToken is None:
+        return badRequestResponse(ErrorCodes.GENERIC_INVALID_PARAMETERS, message=getGenericInvalidParametersErrorPacket(0, "invalid reset token"))
+
+    # reset user's password
+    password = body['password']
+    passwordReset = resetPassword(userPasswordResetToken.user, password)
+    if passwordReset == False:
+        return internalServerErrorResponse(ErrorCodes.PASSWORD_RESET_FAILED,
+                                           message=getPasswordResetFailedErrorPacket())
+
+    return successResponse(message="Password Reset was successful")

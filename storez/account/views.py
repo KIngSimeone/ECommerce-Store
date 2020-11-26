@@ -157,7 +157,7 @@ def deleteUser(user):
     try:
         user.isDeleted = True
         user.save()
-        
+
         return user
     except Exception as err:
         logger.error('deleteUser@error')
@@ -207,6 +207,25 @@ def getUserByPhone(phone):
         logger.error('getUserByPhone@error')
         logger.error(err)
         return None
+
+
+def getUserPasswordResetTokenByUserId(userId):
+    try:
+        userPasswordTokenRecord = UserPasswordResetTokens.objects.filter(user=userId)
+        if len(userPasswordTokenRecord) > 0:
+            userPasswordTokenRecord = userPasswordTokenRecord[0]
+            currentDateTime = datetime.now().date()
+            if currentDateTime <= userPasswordTokenRecord.expiresAt:
+                return userPasswordTokenRecord
+
+            return None
+
+        return None
+    except UserPasswordResetTokens.DoesNotExist:
+        logger.error('getUserByPasswordResetToken@Error')
+        # logger.error(e)
+        return None
+
 
 def getExpiresAt():
     return (timezone.now() + timedelta(minutes=eval(settings.DURATION)))

@@ -78,6 +78,10 @@ def getUserCategoryInvalidErrorPacket():
     return getError(code=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
                     defaultMessage=DefaultErrorMessages.USER_CATEGORY_TYPE_INVALID)
 
+def getPasswordResetFailedErrorPacket():
+    return getError(code = ErrorCodes.PASSWORD_RESET_FAILED, 
+                    defaultMessage = DefaultErrorMessages.PASSWORD_RESET_FAILED)
+
 ## Manager already exist error packet
 def getManagerAlreadyExistErrorPacket(value):
     return getError(code = ErrorCodes.USER_ALREADY_EXIST, 

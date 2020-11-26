@@ -5,6 +5,7 @@ from django.conf import settings
 from account.views import (
                            createUser as createUserRecord,
                            updateUser as updateUserRecord,
+                           deleteUser as deleteUserRecord,
                            getUserByUserName,
                            getUserByEmail,
                            getUserByPhone,
@@ -74,6 +75,11 @@ def singleUserAccountRouter(request, userID):
 
     elif request.method == "PUT":
         return updateUser(request, userID)
+
+# handles "/users/<int:userID>/delete/" requests
+def deleteUserAccountRouter(request, userID):
+    if request.method == "DELETE":
+        return deleteUser(request, userID)
 
 # Create User
 def createUser(request):
@@ -301,7 +307,7 @@ def getUser(request, userID):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
-
+    
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
     
@@ -313,3 +319,29 @@ def getUser(request, userID):
 
     return successResponse(message="successfully retrieved user", body=transformUser(userToBeRetrieved))
 
+def deleteUser(request, userID):
+    # verify that the calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+    print(user)
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
+                                       message=getUnauthenticatedErrorPacket())
+    
+    # check is UserID exists
+    userToBeDeleted = getUserById(userID)
+    
+    if userToBeDeleted == None:
+        return resourceNotFoundResponse(ErrorCodes.USER_DOES_NOT_EXIST,
+                                        message=getUserDoesNotExistErrorPacket())
+    
+    # check if user has the privileges to delete the resource
+    if user.userCategoryType != 'controller' or user != userToBeDeleted:
+        return unAuthorizedResponse(ErrorCodes.UNAUTHORIZED_REQUEST, message=getUnauthorizedErrorPacket())
+
+    userDeleted = deleteUserRecord(userToBeDeleted)
+    if userDeleted is None:
+        return internalServerErrorResponse(ErrorCodes.USER_DELETION_FAILED,
+                                            message=getUserDeletionFailedErrorPacket())
+
+    return successResponse(message="Successfully deleted user", body={})

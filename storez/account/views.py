@@ -152,6 +152,18 @@ def listAllUsers():
         logger.error(err)
         return None
 
+def deleteUser(user):
+    # permanent or temporarily delete
+    try:
+        user.isDeleted = True
+        user.save()
+        
+        return user
+    except Exception as err:
+        logger.error('deleteUser@error')
+        logger.error(err)
+        return None
+
 def getUserByEmail(email):
     try:
         return User.objects.get(email=email)

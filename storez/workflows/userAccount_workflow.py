@@ -299,9 +299,9 @@ def getAllUsers(request):
 
 def getUser(request, userID):
     # verify that the calling user has a valid token
-    token = request.headers.get('accesToken')
+    token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
-    print(user)
+
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
     

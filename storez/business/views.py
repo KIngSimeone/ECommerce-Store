@@ -19,13 +19,13 @@ import logging
 # Create and instance of a logger
 logger = logging.getLogger(__name__)
 
-def createBusiness(user,businessName,businessEmail,phone):
+def createBusiness(user,businessName,businessEmail,businessPhone):
     try:
         business = Business(
                     user=user,
-                    businessName=businesstName,
+                    businessName=businessName,
                     businessEmail=businessEmail,
-                    phone=phone
+                    businessPhone=businessPhone
                      )
 
         business.save()
@@ -53,4 +53,20 @@ def createBusinessAddress(user,business,street,city,state,country,zipCode):
     except Exception as e:
         logger.error("CreateBusinessAddress@error")
         logger.error(e)
+        return None
+
+def getBusinessByEmail(email):
+    try:
+        return Business.objects.get(businessEmail=email)
+    except Exception as err:
+        logger.error("getBusinessByEmail@error")
+        logger.error(err)
+        return None
+
+def getBusinessByPhone(phone):
+    try:
+        return Business.objects.get(businessPhone=phone)
+    except Exception as err:
+        logger.error("getBusinessByPhone@error")
+        logger.error(err)
         return None

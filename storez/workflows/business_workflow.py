@@ -1,15 +1,16 @@
 import os
 import json
 from django.conf import settings
-from dotenv import load_dotenv
 from django.http import HttpResponse, JsonResponse
 
 from business.models import Business, BusinessAddress
-from accounts.views import getUserByAccessToken
+from account.views import getUserByAccessToken
 
 from business.views import (
-                                createBusiness as createNewRestaurant,
-                                createBusinessAddress
+                                createBusiness as createNewBusiness,
+                                createBusinessAddress,
+                                getBusinessByEmail,
+                                getBusinessByPhone
                                )
 
 from apiutility.validators import (
@@ -30,15 +31,12 @@ from error.errorCodes import (
                         DefaultErrorMessages,
                         getUnauthenticatedErrorPacket,
                         getUnauthorizedErrorPacket,
-                        getUserDeletionFailedErrorPacket,
                         getPasswordResetFailedErrorPacket,
-                        getBuisnessAlreadyExistErrorPacket,
+                        getBusinessAlreadyExistErrorPacket,
                         getBusinessCreationFailedErrorPacket,
                         getBusinessCreationAddressFailedErrorPacket,
-                        getBusinessDoesNotExistErrorPacket
-                        
+                        getBusinessDoesNotExistErrorPacket    
                     )
-
 
 from apiutility.responses import (
                     unAuthorizedResponse,
@@ -62,9 +60,17 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+# Handles 'businesses/' endpoints requests
+def userBusinessRouter(request):
+    if request.method == "GET":
+        return getAllBusiness(request)
+        
+    if request.method =="POST":
+        return createBusiness(request)
 
-# Create Restaurant
-def createRestaurant(request):
+
+# Create Business
+def createBusiness(request):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
@@ -73,48 +79,62 @@ def createRestaurant(request):
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
                                        message=getUnauthenticatedErrorPacket())
     
-    # get Json information passed in
-    data = json.loads(request.body)
+    # Check if user has the privilege to create the resource
+    if user.userCategoryType != 'manager':
+        return unAuthorizedResponse(ErrorCodes.UNAUTHORIZED_REQUEST, message=getUnauthorizedErrorPacket())
 
-    #check if required fields are present in request payload
-    missingKeys = validateKeys(payload=data,requiredKeys=[
-                               'restaurantName','restaurantEmail','restaurantLogo','street','city','state','country','zipCode'])
+    # get Json information passed in
+    body = json.loads(request.body)
+
+    # check if required fields are present in request payload
+    missingKeys = validateKeys(payload=body,requiredKeys=[
+                               'businessName','businessEmail','businessPhone','street','city','state','country','zipCode'])
 
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
 
-    #validate if the email is in the correct format
-    if not validateEmailFormat(data['restaurantEmail']):
+    # validate if the email is in the correct format
+    if not validateEmailFormat(body['businessEmail']):
         return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                   message=getGenericInvalidParametersErrorPacket("Email format is invalid"))
 
-    #check if restaurant with that email exists
-    if getRestaurantByEmail(data['restaurantEmail'])is not None:
-        return resourceConflictResponse(errorCode=ErrorCodes.RESTAURANT_ALREADY_EXIST,
-                                            message=getRestaurantAlreadyExistErrorPacket(value="restaurantEmail"))
+    # validate if the phone is in the correct format
+    if not validatePhoneFormat(body['businessPhone']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket("Phone format is invalid"))
 
-    restaurantName = data['restaurantName']
-    restaurantEmail = data ['restaurantEmail']
-    restaurantLogo = data['restaurantLogo']
-    street = data['street']
-    city = data['city']
-    state = data['state']
-    country = data['country']
-    zipCode= data['zipCode']
+    # check if business with that email exists
+    if getBusinessByEmail (body['businessEmail']) is not None:        
+        return resourceConflictResponse(errorCode=ErrorCodes.BUSINESS_ALREADY_EXIST,
+                                            message=getBusinessAlreadyExistErrorPacket("businessEmail"))
+    
+    # Check if business with that phone exists
+    if getBusinessByPhone(body['businessPhone']) is not None:
+        return resourceConflictResponse(errorCode=ErrorCodes.BUSINESS_ALREADY_EXIST,
+                                        message=getBusinessAlreadyExistErrorPacket('businessPhone'))
 
-    createdRestaurant = createNewRestaurant(
+    businessName = body['businessName']
+    businessEmail = body ['businessEmail']
+    businessPhone = body['businessPhone']
+    street = body['street']
+    city = body['city']
+    state = body['state']
+    country = body['country']
+    zipCode= body['zipCode']
+
+    createdBusiness = createNewBusiness(
                                             user=user,
-                                            restaurantName=restaurantName,
-                                            restaurantEmail=restaurantEmail,
-                                            restaurantLogo=restaurantLogo
+                                            businessName=businessName,
+                                            businessEmail=businessEmail,
+                                            businessPhone=businessPhone
                                             )
 
-    if createdRestaurant == None:
-        return internalServerErrorResponse(ErrorCodes.RESTAURANT_CREATION_FAILED,
-                                            message=getRestaurantCreationFailedErrorPacket())
+    if createdBusiness == None:
+        return internalServerErrorResponse(ErrorCodes.BUSINESS_CREATION_FAILED,
+                                            message=getBusinessCreationFailedErrorPacket())
 
-    restaurantAddress = createRestaurantAddress(user=user,
-                                                restaurant=createdRestaurant,
+    businessAddress = createBusinessAddress(user=user,
+                                                business=createdBusiness,
                                                 street= street,
                                                 city= city,
                                                 state= state,
@@ -122,16 +142,8 @@ def createRestaurant(request):
                                                 zipCode= zipCode,
                                                 )
 
-    if restaurantAddress == None:
-        return internalServerErrorResponse(ErrorCodes.RESTAURANT_ADDRESS_CREATION_FIELD,
-                                            message=getRestaurantCreationAddressFailedErrorPacket())
+    if businessAddress == None:
+        return internalServerErrorResponse(ErrorCodes.Business_ADDRESS_CREATION_FIELD,
+                                            message=getBusinessCreationAddressFailedErrorPacket())
 
-    restaurantMenu = createRestaurantMenu(user=user,
-                                        restaurant=createdRestaurant
-                                        )
-
-    if restaurantMenu == None:
-        return internalServerErrorResponse(ErrorCodes.RESTAURANT_MENU_CREATION_FAILED,
-                                            message=getRestaurantMenuCreationFailedErrorPacket())
-
-    return successResponse(message="successfully created restaurant", body=transformRestaurant(createdRestaurant))
+    return successResponse(message="successfully created restaurant", body=transformBusiness(createdBusiness))

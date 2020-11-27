@@ -18,14 +18,18 @@ from django.urls import path
 
 from workflows.authentication_workflow import (
                                                authenticationRouter
-                                               #authenticateManagerRouter,
-                                               #authenticateControllerRouter
                                               )
 from workflows.userAccount_workflow import (
                                             userAccountRouter,
                                             singleUserAccountRouter,
                                             deleteUserAccountRouter
                                             )
+
+from workflows.business_workflow import (
+                                  userBusinessRouter
+                                 )
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,5 +40,8 @@ urlpatterns = [
     # account-related endpoints
     path('users/', userAccountRouter, name="user-Router"),
     path('users/<int:userID>/', singleUserAccountRouter, name="singleUserAccount-router"),
-    path('users/<int:userID>/delete/', deleteUserAccountRouter, name="deleteUserAccount-router")
+    path('users/<int:userID>/delete/', deleteUserAccountRouter, name="deleteUserAccount-router"),
+
+    # business endpoints
+    path('businesses/', userBusinessRouter, name="business-Router")
 ]

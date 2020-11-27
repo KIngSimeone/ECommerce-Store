@@ -21,6 +21,23 @@ import logging
 # Create and instance of a logger
 logger = logging.getLogger(__name__)
 
+
+
+# Create Send Email Function
+def sendEmail(email,token):
+    try:
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+
+        server.login((settings.SERVER_EMAIL),((settings.SERVER_PASSWORD)))
+        sender = settings.SERVER_EMAIL
+        message = ('\nThe following is your reset email token: ' + str(token))
+
+        server.sendmail(from_addr=sender,to_addrs=(email),msg=message)
+    except Exception as e:
+        logger.error("sendEmail@Error")
+        logger.error(e)
+        return None
+
 #Create user authentication function
 def authenticateUser(email, password):
     try:
@@ -208,6 +225,24 @@ def getUserByPhone(phone):
         logger.error(err)
         return None
 
+def getUserPasswordResetTokenByResetToken(passwordResetToken):
+    try:
+        userPasswordTokenRecord = UserPasswordResetTokens.objects.filter(
+            resetToken=passwordResetToken)
+        if len(userPasswordTokenRecord) > 0:
+            userPasswordTokenRecord = userPasswordTokenRecord[0]
+            currentDateTime = datetime.now().date()
+            if currentDateTime <= userPasswordTokenRecord.expiresAt:
+                return userPasswordTokenRecord
+
+            return None
+
+        return None
+    except UserPasswordResetTokens.DoesNotExist:
+        logger.error('getUserByPasswordResetToken@Error')
+        logger.error(e)
+        return None
+
 
 def getUserPasswordResetTokenByUserId(userId):
     try:
@@ -225,6 +260,23 @@ def getUserPasswordResetTokenByUserId(userId):
         logger.error('getUserByPasswordResetToken@Error')
         # logger.error(e)
         return None
+        
+def resetPassword(user, password):
+    try:
+        # save the encrypted password
+        # salt = bcrypt.gensalt()
+        # hashedPassword = bcrypt.hashpw(password, salt)
+        # user.password = hashedPassword
+        hashedPassword = make_password(password)
+        user.password = hashedPassword
+
+        user.save()
+        return True
+    except Exception as e:
+        logger.error('resetPassword@error')
+        logger.error(e)
+        return False
+
 
 
 def getExpiresAt():

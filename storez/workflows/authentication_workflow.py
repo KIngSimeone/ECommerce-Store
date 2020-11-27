@@ -68,4 +68,4 @@ def login(request):
 
     userAccessToken = generateUserAccessToken(user)
 
-    return successResponse(message="successfully authenticated", body= generateLoginResponse(user, userAccessToken))
+    return successResponse(message="successfully authenticated", body=generateLoginResponse(user, userAccessToken))

@@ -11,7 +11,9 @@ from account.views import (
                            getUserByPhone,
                            getUserByAccessToken,
                            getUserById,
-                           listAllUsers
+                           listAllUsers,
+                           resetPassword,
+                           getUserPasswordResetTokenByResetToken
                           )
                            
 from account.userCategoryType import UserCategoryType
@@ -50,8 +52,8 @@ from error.errorCodes import (
                               getUserUpdateFailedErrorPacket,
                               getUserCategoryInvalidErrorPacket,
                               getPasswordResetFailedErrorPacket,
-                              getUserPasswordResetTokenByResetToken
                              )
+
 from dataTransformer.jsonTransformer import transformUser,transformUsersList
 from django.core.paginator import Paginator
                                             
@@ -347,7 +349,6 @@ def deleteUser(request, userID):
                                             message=getUserDeletionFailedErrorPacket())
 
     return successResponse(message="Successfully deleted user", body={})
-
 
 def passwordReset(request):
     body = json.loads(request.body)

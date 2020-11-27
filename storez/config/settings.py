@@ -36,6 +36,10 @@ ALLOWED_HOSTS = splittedHosts
 
 DURATION = env('DURATION')
 
+SERVER_EMAIL = env('SERVER_EMAIL')
+SERVER_PASSWORD = env('SERVER_PASSWORD')
+SERVER_SENDER = env('SERVER_SENDER')
+
 # Application definition
 INSTALLED_APPS = [
     'corsheaders',

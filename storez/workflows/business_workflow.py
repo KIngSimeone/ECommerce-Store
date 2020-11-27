@@ -10,7 +10,8 @@ from business.views import (
                                 createBusiness as createNewBusiness,
                                 createBusinessAddress,
                                 getBusinessByEmail,
-                                getBusinessByPhone
+                                getBusinessByPhone,
+                                listAllBusinesses
                                )
 
 from apiutility.validators import (
@@ -60,7 +61,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# Handles 'businesses/' endpoints requests
+# Handles 'business/' endpoints requests
 def userBusinessRouter(request):
     if request.method == "GET":
         return getAllBusiness(request)
@@ -147,3 +148,47 @@ def createBusiness(request):
                                             message=getBusinessCreationAddressFailedErrorPacket())
 
     return successResponse(message="successfully created restaurant", body=transformBusiness(createdBusiness))
+
+
+def getAllBusiness(request):
+    # verify that the calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
+
+    # retrieve a list of all businesses
+    allBusinessList = listAllBusinesses()
+
+    # Paginate the retrieved businesses
+    if request.GET.get('pageBy'):
+        pageBy = request.GET.get('pageBy')
+    else:
+        pageBy = 10
+
+    paginator = Paginator(allBusinessList, pageBy)
+
+    if request.GET.get('page'):
+        pageNum = request.GET.get('page')
+    else:
+        pageNum = 1
+    
+    # try if the page requested exists or is empty
+    try:
+        paginated_BusinessList = paginator.page(pageNum)
+
+        paginationDetails = {
+            "totalPages": paginator.num_pages,
+            "limit": pageBy,
+            "currentPage": pageNum
+        }
+    except Exception as e:
+        print(e)
+        paginated_BusinessList = []
+        paginationDetails = {}
+
+    return paginatedResponse(message="successfully retrieved businesses", 
+                            body=transformBusinessList(paginated_BusinessList), 
+                            pagination=paginationDetails
+                        )

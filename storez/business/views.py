@@ -26,7 +26,7 @@ def createBusiness(user,businessName,businessEmail,businessPhone):
                     businessName=businessName,
                     businessEmail=businessEmail,
                     businessPhone=businessPhone
-                     )
+                    )
 
         business.save()
         return business
@@ -68,5 +68,14 @@ def getBusinessByPhone(phone):
         return Business.objects.get(businessPhone=phone)
     except Exception as err:
         logger.error("getBusinessByPhone@error")
+        logger.error(err)
+        return None
+
+
+def listAllBusinesses():
+    try:
+        return Business.objects.filter(isDeleted=False)
+    except Exception as err:
+        logger.error('listAllBusinesses@error')
         logger.error(err)
         return None

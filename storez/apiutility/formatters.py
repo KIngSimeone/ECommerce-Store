@@ -13,6 +13,7 @@ def toUiReadableDateFormat(value):
         localizedValue = timezone.localtime(
             value, pytz.timezone('UTC'))
         return datetime.strftime(localizedValue, "%b %d, %Y %I:%M%p")
+        
     except Exception as ex:
         print(ex)
         return str(value)

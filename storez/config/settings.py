@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'apiutility',
     'dataTransformer',
     'error',
-    'workflows'
+    'workflows',
+    #'storages',
 ]
 
 MIDDLEWARE = [

@@ -43,5 +43,5 @@ urlpatterns = [
     path('users/<int:userID>/delete/', deleteUserAccountRouter, name="deleteUserAccount-router"),
 
     # business endpoints
-    path('businesses/', userBusinessRouter, name="business-Router")
+    path('business/', userBusinessRouter, name="business-Router")
 ]

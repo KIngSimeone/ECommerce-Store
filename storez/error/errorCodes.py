@@ -20,6 +20,12 @@ class ErrorCodes(IntEnum):
     USER_UPDATE_FAILED = 33
     USER_DELETION_FAILED = 34
 
+    BUSINESS_ALREADY_EXIST = 35
+    RESTAURANT_CREATION_FAILED = 36
+    RESTAURANT_ADDRESS_CREATION_FIELD = 37
+    RESTAURANT_MENU_CREATION_FAILED = 38
+    FOODITEM_CREATION_FAILED = 39
+    RESTAURANT_DOES_NOT_EXIST = 40
 
 class DefaultErrorMessages(str, Enum):
     UNATHENTICATED_REQUEST = "Your session has expired, Please login"
@@ -41,6 +47,15 @@ class DefaultErrorMessages(str, Enum):
     USER_UPDATE_FAILED = "Something went wrong, could not update the user successfully"
     USER_DELETION_FAILED = "Something went wrong, could not delete the user successfully"
     PASSWORD_RESET_FAILED = "Something went wrong, attempt to res et the password was unsuccessful"
+
+    BUSINESS_ALREADY_EXIST = "A restaurant with same {} already exists"
+    RESTAURANT_CREATION_FAILED = "Something went wrong, could not create the restaurant successfully"
+    RESTAURANT_ADDRESS_CREATION_FIELD = "Something went wrong, could not create the restaurant address successfully"
+    RESTAURANT_MENU_CREATION_FAILED = "Something went wrong, could not create the restaurant menu successfully"
+    RESTAURANT_DOES_NOT_EXIST = "Restaurant does not exist."
+    FOODITEM_CREATION_FAILED = "Something went wrong, could not add food item successfully"
+
+
 
     INVALID_COUNTRY_CODE = "The country code specified is invalid"
     INVALID_CURRENCY_CODE = "The currency code specified is invalid"
@@ -82,11 +97,6 @@ def getPasswordResetFailedErrorPacket():
     return getError(code = ErrorCodes.PASSWORD_RESET_FAILED, 
                     defaultMessage = DefaultErrorMessages.PASSWORD_RESET_FAILED)
 
-## Manager already exist error packet
-def getManagerAlreadyExistErrorPacket(value):
-    return getError(code = ErrorCodes.USER_ALREADY_EXIST, 
-                    defaultMessage = DefaultErrorMessages.USER_ALREADY_EXIST.format(value))
-
 def getUserCreationFailedErrorPacket():
     return getError(code=ErrorCodes.USER_CREATION_FAILED,
                     defaultMessage=DefaultErrorMessages.USER_CREATION_FAILED)
@@ -94,6 +104,31 @@ def getUserCreationFailedErrorPacket():
 def getUserUpdateFailedErrorPacket():
     return getError(code=ErrorCodes.USER_UPDATE_FAILED, 
                         defaultMessage=DefaultErrorMessages.USER_UPDATE_FAILED)
+
+## BUSINESS ERROR PACKETS
+def getBusinessAlreadyExistErrorPacket(value):
+    return getError(code = ErrorCodes.BUSINESS_ALREADY_EXIST, 
+                    defaultMessage = DefaultErrorMessages.BUSINESS_ALREADY_EXIST.format(value))
+                    
+def getRestaurantCreationFailedErrorPacket():
+    return getError(code=ErrorCodes.RESTAURANT_CREATION_FAILED, 
+                    defaultMessage=DefaultErrorMessages.RESTAURANT_CREATION_FAILED)
+
+def getFoodItemCreationFailedErrorPacket():
+    return getError(code=ErrorCodes.FOODITEM_CREATION_FAILED, 
+                    defaultMessage=DefaultErrorMessages.FOODITEM_CREATION_FAILED)
+
+def getRestaurantMenuCreationFailedErrorPacket():
+    return getError(code=ErrorCodes.RESTAURANT_MENU_CREATION_FAILED,
+                    defaultMessage=DefaultErrorMessages.RESTAURANT_MENU_CREATION_FAILED)                   
+
+def getRestaurantCreationAddressFailedErrorPacket():
+    return getError(code=ErrorCodes.RESTAURANT_ADDRESS_CREATION_FAILED, 
+                    defaultMessage=DefaultErrorMessages.RESTAURANT_ADDRESS_CREATION_FAILED)
+
+def getRestaurantDoesNotExistErrorPacket():
+    return getError(code=ErrorCodes.RESTAURANT_DOES_NOT_EXIST,
+                    defaultMessage = DefaultErrorMessages.RESTAURANT_DOES_NOT_EXIST)
 
 ## generic invalid error
 def getGenericInvalidParametersErrorPacket(message):

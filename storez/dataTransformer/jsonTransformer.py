@@ -34,3 +34,24 @@ def transformUsersList(Users):
         results.append(transformUser(user))
 
     return results
+
+
+def transformBusiness(business):
+    user = business.user.firstName + " " + business.user.lastName
+
+    return {
+        "id": business.id,
+        "name": business.businessName,
+        "email": business.businessEmail,
+        "phone": business.businessPhone,
+        "createdAt": business.createdAt,
+        "createdBy": user
+    }
+
+
+def transformBusinessList(businessList):
+    results = []
+    for business in businessList:
+        results.append(transformBusiness(business))
+
+    return results

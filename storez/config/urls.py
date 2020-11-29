@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
+from workflows.tokenReset_workflow import resetTokenURLRouter, validateTokenURLRouter
 from workflows.authentication_workflow import (
                                                authenticationRouter
                                               )
@@ -42,7 +44,11 @@ urlpatterns = [
     path('users/', userAccountRouter, name="user-Router"),
     path('users/<int:userID>/', singleUserAccountRouter, name="singleUserAccount-router"),
     path('users/<int:userID>/delete/', deleteUserAccountRouter, name="deleteUserAccount-router"),
-        path('users/passwordreset/', passwordResetRouter, name="passwordReset-router"),
+    path('users/passwordreset/', passwordResetRouter, name="passwordReset-router"),
+
+        # reset password endpoints
+    path('resettoken/', resetTokenURLRouter, name="resetTokenURL-router"),
+    path('validatetoken/', validateTokenURLRouter, name="validateTokenURL-router"),
 
     # business endpoints
     path('business/', userBusinessRouter, name="business-Router")

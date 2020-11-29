@@ -85,6 +85,13 @@ def deleteUserAccountRouter(request, userID):
     if request.method == "DELETE":
         return deleteUser(request, userID)
 
+# handles "/users/resetpassword/" requests
+def passwordResetRouter(request):
+    if request.method == "POST":
+        return passwordReset(request)
+
+
+
 # Create User
 def createUser(request):
     # get Json information passed in

@@ -149,7 +149,6 @@ def createBusiness(request):
 
     return successResponse(message="successfully created restaurant", body=transformBusiness(createdBusiness))
 
-
 def getAllBusiness(request):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')

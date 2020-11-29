@@ -11,6 +11,7 @@ from business.views import (
                                 createBusinessAddress,
                                 getBusinessByEmail,
                                 getBusinessByPhone,
+                                getBusinessById,
                                 listAllBusinesses
                                )
 
@@ -191,3 +192,24 @@ def getAllBusiness(request):
                             body=transformBusinessList(paginated_BusinessList), 
                             pagination=paginationDetails
                         )
+
+
+def updateBusiness(request, businessID):
+    # verify that the calling user has a valid token
+    body = json.loads(request.body)
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
+                                        message=getUnauthenticatedErrorPacket())
+
+    # check if required fields are present in request payload
+    missingKeys = validateKeys(payload=body,requiredKeys=[
+                               'businessName','businessEmail','businessPhone','street','city','state','country','zipCode'])
+
+    if missingKeys:
+        return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
+
+    # check if businesToBeUpdated already exists
+    businessToBeUpdated = getBusinessById(businessID)

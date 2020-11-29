@@ -32,8 +32,6 @@ from workflows.business_workflow import (
                                   userBusinessRouter
                                  )
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -46,7 +44,7 @@ urlpatterns = [
     path('users/<int:userID>/delete/', deleteUserAccountRouter, name="deleteUserAccount-router"),
     path('users/passwordreset/', passwordResetRouter, name="passwordReset-router"),
 
-        # reset password endpoints
+    # reset password endpoints
     path('resettoken/', resetTokenURLRouter, name="resetTokenURL-router"),
     path('validatetoken/', validateTokenURLRouter, name="validateTokenURL-router"),
 

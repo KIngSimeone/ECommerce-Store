@@ -71,6 +71,16 @@ def getBusinessByPhone(phone):
         logger.error(err)
         return None
 
+def getBusinessById(businessId):
+    try:
+        return Business.objects.get(id=businessId)
+
+    except Exception as err:
+        logger.error('getBusinessById@error')
+        logger.error(err)
+        return None
+
+
 
 def listAllBusinesses():
     try:

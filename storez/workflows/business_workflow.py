@@ -193,7 +193,7 @@ def getAllBusiness(request):
                             pagination=paginationDetails
                         )
 
-
+"""
 def updateBusiness(request, businessID):
     # verify that the calling user has a valid token
     body = json.loads(request.body)
@@ -213,3 +213,31 @@ def updateBusiness(request, businessID):
 
     # check if businesToBeUpdated already exists
     businessToBeUpdated = getBusinessById(businessID)
+    if businessToBeUpdated is None:
+        return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST, getBusinessDoesNotExistErrorPacket())
+
+    # Check if user has the privilege to perform action
+    if user != businessToBeUpdated.user:
+        return unAuthorizedResponse(ErrorCodes.UNAUTHORIZED_REQUEST, message=getUnauthorizedErrorPacket())
+
+    # validate if the email is in the correct format
+    if not validateEmailFormat(body['businessEmail']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket("Email format is invalid"))
+
+    # validate if the phone is in the correct format
+    if not validatePhoneFormat(body['businessPhone']):
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                  message=getGenericInvalidParametersErrorPacket("Phone format is invalid"))
+
+    # check if business with that email exists
+    if getBusinessByEmail (body['businessEmail']) is not None:        
+        return resourceConflictResponse(errorCode=ErrorCodes.BUSINESS_ALREADY_EXIST,
+                                            message=getBusinessAlreadyExistErrorPacket("businessEmail"))
+    
+    # Check if business with that phone exists
+    if getBusinessByPhone(body['businessPhone']) is not None:
+        return resourceConflictResponse(errorCode=ErrorCodes.BUSINESS_ALREADY_EXIST,
+                                        message=getBusinessAlreadyExistErrorPacket('businessPhone'))
+
+"""

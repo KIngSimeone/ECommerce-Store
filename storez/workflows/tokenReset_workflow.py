@@ -26,7 +26,7 @@ from apiutility.validators import (
 from account.views import (
                 getUserByEmailOnly,
                 setupUserPasswordResetToken,
-                getUserPasswordResetTokenByResetToken
+                getUserPasswordResetTokenByResetToken,
                 sendEmail
             )
 

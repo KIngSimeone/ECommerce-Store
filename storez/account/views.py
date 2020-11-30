@@ -260,6 +260,35 @@ def getUserPasswordResetTokenByUserId(userId):
         logger.error('getUserByPasswordResetToken@Error')
         # logger.error(e)
         return None
+
+def setupUserPasswordResetToken(user):
+    try:
+        userResetTokenRecord = getUserPasswordResetTokenByUserId(user.id)
+        currentDateTime = datetime.now().date()
+
+        if userResetTokenRecord is None:
+            userResetTokenRecord = UserPasswordResetTokens(user=user, 
+                        resetToken=hashlib.sha256(getHashKey(user).encode('utf-8')).hexdigest(),
+                        expiresAt=getExpiresAt()
+                        )
+
+            userResetTokenRecord.save()
+
+            return userResetTokenRecord
+
+        if userResetTokenRecord.expiresAt <= currentDateTime:
+            userResetTokenRecord.expiresAt = getExpiresAt()
+            userResetTokenRecord.save()
+
+            return userResetTokenRecord
+
+        return userResetTokenRecord
+
+    except UserPasswordResetTokens.DoesNotExist:
+        logger.error('setupUserPasswordResetToken@Error')
+        # logger.error(e)
+        return None
+
         
 def resetPassword(user, password):
     try:

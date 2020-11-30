@@ -92,7 +92,7 @@ def createBusiness(request):
     # check if required fields are present in request payload
     missingKeys = validateKeys(payload=body,requiredKeys=[
                                'businessName','businessEmail','businessPhone','street','city','state','country','zipCode'])
-
+                               
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
 

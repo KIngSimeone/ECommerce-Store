@@ -26,7 +26,6 @@ class User(models.Model):
     class Meta:
         ordering = ['id']
 
-
 class UserAccessTokens(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     accessToken = models.TextField("access_token")

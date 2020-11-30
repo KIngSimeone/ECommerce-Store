@@ -56,7 +56,7 @@ def validateThatAStringIsClean(value):
 
 def validateThatStringIsEmpty(value):
     return (len(value.strip()) > 0)
-4
+
 def validateThatStringIsEmptyAndClean(value):
     is_clean = (re.compile(r'[@_!#$%^&*()<>?/\|}{~:]').search(value) == None)
     not_empty = (len(value.strip()) != 0)

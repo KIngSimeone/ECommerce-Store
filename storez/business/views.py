@@ -80,8 +80,6 @@ def getBusinessById(businessId):
         logger.error(err)
         return None
 
-
-
 def listAllBusinesses():
     try:
         return Business.objects.filter(isDeleted=False)

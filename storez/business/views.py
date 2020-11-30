@@ -92,14 +92,14 @@ def listAllBusinesses():
 
 
 def uploadFileToS3(filepath, s3FileName):
-    s3 = boto3.client('s3',endpoint_url=settings.BUCKET_ENDPOINT_URL,
-                        aws_access_key_id=settings.BUCKET_ACCESS_KEY_ID,
-                        aws_secret_access_key=settings.BUCKET_SECRET_KEY
+    s3 = boto3.client('s3',endpoint_url=settings.AWS_S3_CUSTOM_DOMAIN,
+                        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
                         )
     try:
         s3.upload_file(
             filepath,
-            settings.BUCKET_NAME,
+            settings.AWS_STORAGE_BUCKET_NAME,
             s3FileName
         )
 

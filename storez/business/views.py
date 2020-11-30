@@ -89,3 +89,22 @@ def listAllBusinesses():
         logger.error('listAllBusinesses@error')
         logger.error(err)
         return None
+
+
+def uploadFileToS3(filepath, s3FileName):
+    s3 = boto3.client('s3',endpoint_url=settings.BUCKET_ENDPOINT_URL,
+                        aws_access_key_id=settings.BUCKET_ACCESS_KEY_ID,
+                        aws_secret_access_key=settings.BUCKET_SECRET_KEY
+                        )
+    try:
+        s3.upload_file(
+            filepath,
+            settings.BUCKET_NAME,
+            s3FileName
+        )
+
+        return True
+    except Exception as e:
+        logger.error("uploadFileToS3@error")
+        logger.error(e)
+        return False

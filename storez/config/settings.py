@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'dataTransformer',
     'error',
     'workflows',
-    #'storages',
+    'storages',
 ]
 
 MIDDLEWARE = [

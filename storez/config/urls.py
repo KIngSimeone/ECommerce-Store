@@ -29,7 +29,8 @@ from workflows.userAccount_workflow import (
                                             )
 
 from workflows.business_workflow import (
-                                  userBusinessRouter
+                                  userBusinessRouter,
+                                  uploadFileRouter
                                  )
 
 urlpatterns = [
@@ -49,5 +50,8 @@ urlpatterns = [
     path('validatetoken/', validateTokenURLRouter, name="validateTokenURL-router"),
 
     # business endpoints
-    path('business/', userBusinessRouter, name="business-Router")
+    path('business/', userBusinessRouter, name="business-Router"),   
+
+    # upload endpoints
+    path('upload/', uploadFileRouter, name="upload router")
 ]

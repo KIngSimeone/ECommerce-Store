@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 
 from business.models import Business, BusinessAddress
 from account.views import getUserByAccessToken
+import requests
 
 from business.views import (
                                 createBusiness as createNewBusiness,
@@ -13,7 +14,8 @@ from business.views import (
                                 getBusinessByEmail,
                                 getBusinessByPhone,
                                 getBusinessById,
-                                listAllBusinesses
+                                listAllBusinesses,
+                                uploadFileToS3
                                )
 
 from apiutility.validators import (
@@ -71,6 +73,10 @@ def userBusinessRouter(request):
     if request.method =="POST":
         return createBusiness(request)
 
+# Handles 'upload/' endpoints requests
+def uploadFileRouter(request):        
+    if request.method =="POST":
+        return uploadFile(request)
 
 # Create Business
 def createBusiness(request):
@@ -92,7 +98,7 @@ def createBusiness(request):
     # check if required fields are present in request payload
     missingKeys = validateKeys(payload=body,requiredKeys=[
                                'businessName','businessEmail','businessPhone','street','city','state','country','zipCode'])
-                               
+
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
 
@@ -242,3 +248,19 @@ def updateBusiness(request, businessID):
                                         message=getBusinessAlreadyExistErrorPacket('businessPhone'))
 
 """
+
+def uploadFile(request):
+
+    # verify that the calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
+
+    filepath = settings.PUBLIC_MEDIA_LOCATION
+    s3Filename = requests.files['fileName']
+
+    upload = uploadFileToS3(filepath=filepath, s3FileName=s3FileName)
+
+    return successResponse(message="successfully uploaded file", body="done")

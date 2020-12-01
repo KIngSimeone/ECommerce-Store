@@ -16,7 +16,7 @@ import secrets
 # import the logging library
 import logging
 
-# Create and instance of a logger
+# Create and instance of a logger 
 logger = logging.getLogger(__name__)
 
 def createBusiness(user,businessName,businessEmail,businessPhone):

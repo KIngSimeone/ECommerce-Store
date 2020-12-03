@@ -65,7 +65,7 @@ def getBusinessByEmail(email):
 
 def getBusinessByPhone(phone):
     try:
-        return Business.objects.get(businessPhone=phone)
+        return Business.objects.geta(businessPhone=phone)
     except Exception as err:
         logger.error("getBusinessByPhone@error")
         logger.error(err)
@@ -87,7 +87,6 @@ def listAllBusinesses():
         logger.error('listAllBusinesses@error')
         logger.error(err)
         return None
-
 
 def uploadFileToS3(filepath, s3FileName):
     s3 = boto3.client('s3',endpoint_url=settings.AWS_S3_CUSTOM_DOMAIN,

@@ -1,5 +1,6 @@
 # Add payment option
 import os
+import boto3
 import json
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
@@ -259,7 +260,7 @@ def uploadFile(request):
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
 
     filepath = settings.PUBLIC_MEDIA_LOCATION
-    s3Filename = requests.files['fileName']
+    s3Filename = requests.FILES['fileName']
 
     upload = uploadFileToS3(filepath=filepath, s3FileName=s3FileName)
 

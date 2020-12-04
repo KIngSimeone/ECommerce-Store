@@ -53,5 +53,5 @@ urlpatterns = [
     path('business/', userBusinessRouter, name="business-Router"),   
 
     # upload endpoints
-    path('upload/', uploadFileRouter, name="upload router")
+    path('upload/', uploadFileRouter, name="upload-router")
 ]

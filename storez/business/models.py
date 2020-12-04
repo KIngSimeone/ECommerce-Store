@@ -40,8 +40,6 @@ class Product(models.Model):
         name = str(self.productName)
         return name
 
-
-
 class Photo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     title = models.CharField(max_length=100)

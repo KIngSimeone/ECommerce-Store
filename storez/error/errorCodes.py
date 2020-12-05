@@ -51,9 +51,8 @@ class DefaultErrorMessages(str, Enum):
     BUSINESS_ALREADY_EXIST = "A restaurant with same {} already exists"
     BUSINESS_CREATION_FAILED = "Something went wrong, could not create the business successfully"
     BUSINESS_ADDRESS_CREATION_FIELD = "Something went wrong, could not create the business address successfully"
-    #RESTAURANT_MENU_CREATION_FAILED = "Something went wrong, could not create the restaurant menu successfully"
     BUSINESS_DOES_NOT_EXIST = "Restaurant does not exist."
-    #FOODITEM_CREATION_FAILED = "Something went wrong, could not add food item successfully"
+
 
 
 
@@ -73,8 +72,6 @@ def getUnauthenticatedErrorPacket():
 def getUnauthorizedErrorPacket():
     return getError(code = ErrorCodes.UNAUTHORIZED_REQUEST,
                     defaultMessage = DefaultErrorMessages.UNAUTHORIZED_REQUEST)
-
-
 
 ## ACOUNT MANAGEMENT ERROR PACKET
 def getInvalidCredentialsErrorPacket():

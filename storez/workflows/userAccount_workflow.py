@@ -240,10 +240,10 @@ def updateUser(request, userID):
         if userEmail.id != userToBeUpdated.id:
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                             message=getUserAlreadyExistErrorPacket(value="email"))
-
+                                                                                                                                                                                                                                                                                                                     u
     # check that phone specified does not belong to another user
     userPhone = getUserByPhone(phone=body['phone'])
-    if userPhone != None:
+    if userPhone != None: 
         if userPhone.id != userToBeUpdated.id:
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                             message=getUserAlreadyExistErrorPacket(value="phone"))

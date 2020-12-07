@@ -55,4 +55,27 @@ def createProduct(request):
         return getUnauthenticatedErrorPacket(ErrorCodes.UNAUTHENTICATED_REQUEST,
                                             message=getUnauthenticatedErrorPacket())
     
-    #check if required fields are present in requets payload
+    # check if required fields are present in requets payload
+    missingKeys = validateKeys(payload=body,requiredKeys=[
+                               'productName','productPrice','quantity'])
+
+    if missingKeys:
+        return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
+    
+    # save passed information in varaibles
+    productName = body['productName']
+    productPrice = body['productPrice']
+    quantity = body['quantity']
+
+    business = business.objects.get(user=user)
+
+    if user.userCategoryType != 'manager':
+        return unAuthorizedResponse(ErrorCodes.UNAUTHORIZED_REQUEST, message=getUnauthorizedErrorPacket())
+
+    createdProduct = createNewProduct(business=business,productName=productName,productPrice=productPrice,quantity=quantity)
+
+    if createdProduct == None:
+        return internalServerErrorResponse(ErrorCodes.PRODUCT_CREATION_FAILED,
+                                            message=getProductCreationFailedErrorPacket())
+
+    return successResponse(message="successfully added product", body=transformProduct(createdProduct))

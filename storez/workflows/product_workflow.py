@@ -29,7 +29,8 @@ from error.errorCodes import (
                         getBusinessAlreadyExistErrorPacket,
                         getBusinessCreationFailedErrorPacket,
                         getBusinessCreationAddressFailedErrorPacket,
-                        getBusinessDoesNotExistErrorPacket    
+                        getBusinessDoesNotExistErrorPacket,
+                        getProductCreationFailedErrorPacket   
                     )
 
 from dataTransformer.jsonTransformer import(transformProduct,

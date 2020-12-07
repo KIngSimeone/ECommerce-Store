@@ -23,9 +23,9 @@ class ErrorCodes(IntEnum):
     BUSINESS_ALREADY_EXIST = 35
     BUSINESS_CREATION_FAILED = 36
     BUSINESS_ADDRESS_CREATION_FIELD = 37
-    #RESTAURANT_MENU_CREATION_FAILED = 38
-    #FOODITEM_CREATION_FAILED = 39
     BUSINESS_DOES_NOT_EXIST = 40
+
+    PRODUCT_CREATION_FAILED = 41
 
 class DefaultErrorMessages(str, Enum):
     UNATHENTICATED_REQUEST = "Your session has expired, Please login"
@@ -34,8 +34,8 @@ class DefaultErrorMessages(str, Enum):
     MISSING_FIELDS = "The following key(s) are required"
     PRODUCT_UPDATE_FAILED = "Something went wrong, could not update the product successfully"
     PRODUCT_ALREADY_EXIST = "A product with same {} already exists"
-    PRODUCT_CREATION_FAILED = "Something went wrong, could not create the product for merchant successfully"
-    PRODUCT_DELETION_FAILED = "Something went wrong, could not delete the product for merchant successfully"
+    PRODUCT_CREATION_FAILED = "Something went wrong, could not create the product for business successfully"
+    PRODUCT_DELETION_FAILED = "Something went wrong, could not delete the product for business successfully"
 
     INVALID_CREDENTIALS = "Invalid credentials"
     USER_ALREADY_EXIST = "A user with same {} already exists"
@@ -110,15 +110,6 @@ def getBusinessAlreadyExistErrorPacket(value):
 def getBusinessCreationFailedErrorPacket():
     return getError(code=ErrorCodes.BUSINESS_CREATION_FAILED, 
                     defaultMessage=DefaultErrorMessages.BUSINESS_CREATION_FAILED)
-"""
-def getFoodItemCreationFailedErrorPacket():
-    return getError(code=ErrorCodes.FOODITEM_CREATION_FAILED, 
-                    defaultMessage=DefaultErrorMessages.FOODITEM_CREATION_FAILED)
-
-def getRestaurantMenuCreationFailedErrorPacket():
-    return getError(code=ErrorCodes.RESTAURANT_MENU_CREATION_FAILED,
-                    defaultMessage=DefaultErrorMessages.RESTAURANT_MENU_CREATION_FAILED)                   
-"""
 
 def getBusinessCreationAddressFailedErrorPacket():
     return getError(code=ErrorCodes.BUSINESS_ADDRESS_CREATION_FAILED, 
@@ -127,6 +118,12 @@ def getBusinessCreationAddressFailedErrorPacket():
 def getBusinessDoesNotExistErrorPacket():
     return getError(code=ErrorCodes.BUSINESS_DOES_NOT_EXIST,
                     defaultMessage = DefaultErrorMessages.BUSINESS_DOES_NOT_EXIST)
+
+## PRODUCT ERROR PACKETS
+def getProductCreationFailedErrorPacket():
+    return getError(code=ErrorCodes.PRODUCT_CREATION_FAILED, 
+                    defaultMessage=DefaultErrorMessages.PRODUCT_CREATION_FAILED
+
 
 ## generic invalid error
 def getGenericInvalidParametersErrorPacket(message):

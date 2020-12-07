@@ -44,3 +44,15 @@ from django.core.paginator import Paginator
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Create product
+def createProduct(request):
+    # verify that the calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+    body = json.loads(request.body)
+    if user is None:
+        return getUnauthenticatedErrorPacket(ErrorCodes.UNAUTHENTICATED_REQUEST,
+                                            message=getUnauthenticatedErrorPacket())
+    
+    #check if required fields are present in requets payload

@@ -55,3 +55,20 @@ def transformBusinessList(businessList):
         results.append(transformBusiness(business))
 
     return results
+
+def transformProduct(product):
+    business = business.businessName + "'s products."  
+
+    return {
+        "id": product.id,
+        "name": product.productName,
+        "price": product.productPrice,
+        "quantity": product.quantity
+    }
+
+def transformProductist(productList):
+    results = []
+    for product in productList:
+        results.append(transformProduct(product))
+
+    return results

@@ -55,6 +55,21 @@ def createBusinessAddress(user,business,street,city,state,country,zipCode):
         logger.error(e)
         return None
 
+def createProduct(business,productName,productPrice,quantity):
+    try:
+        product = Product(
+            business=business,
+            productName=productName,
+            productPrice=productPrice,
+            quantity=quantity
+            )
+        product.save()
+        return product
+    except Exception as e:
+        logger.error("createProduct@error")
+        logger.error(e)
+        return None
+
 def getBusinessByEmail(email):
     try:
         return Business.objects.get(businessEmail=email)

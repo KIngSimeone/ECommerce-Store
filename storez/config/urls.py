@@ -32,6 +32,9 @@ from workflows.business_workflow import (
                                   userBusinessRouter,
                                   uploadFileRouter
                                  )
+from workflows.product_workflow import(
+                                productRouter
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,6 +55,8 @@ urlpatterns = [
     # business endpoints
     path('business/', userBusinessRouter, name="business-Router"),   
 
+    # product endpoins
+    path('product/', productRouer, name="product-router")
     # upload endpoints
     path('upload/', uploadFileRouter, name="upload-router")
 ]

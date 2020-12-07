@@ -45,6 +45,13 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Handles 'product/' endpoints requests
+def productRouter(request):       
+    if request.method =="POST":
+        return createProduct(request)
+
+
+
 # Create product
 def createProduct(request):
     # verify that the calling user has a valid token

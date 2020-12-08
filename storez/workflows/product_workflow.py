@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 
 from account.views import getUserByAccessToken
-from business.models import Product
+from business.models import Product, Business
 
 from business.views import createProduct as createNewProduct
 
@@ -73,7 +73,7 @@ def createProduct(request):
     productPrice = body['productPrice']
     quantity = body['quantity']
 
-    business = business.objects.get(user=user)
+    business = Business.objects.get(user=user)
 
     if user.userCategoryType != 'manager':
         return unAuthorizedResponse(ErrorCodes.UNAUTHORIZED_REQUEST, message=getUnauthorizedErrorPacket())

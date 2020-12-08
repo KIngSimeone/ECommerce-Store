@@ -1,4 +1,5 @@
 import os
+import json
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 
@@ -49,8 +50,6 @@ logger = logging.getLogger(__name__)
 def productRouter(request):       
     if request.method =="POST":
         return createProduct(request)
-
-
 
 # Create product
 def createProduct(request):

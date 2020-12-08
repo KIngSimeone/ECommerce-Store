@@ -124,7 +124,6 @@ def getProductCreationFailedErrorPacket():
     return getError(code=ErrorCodes.PRODUCT_CREATION_FAILED, 
                     defaultMessage=DefaultErrorMessages.PRODUCT_CREATION_FAILED)
 
-
 ## generic invalid error
 def getGenericInvalidParametersErrorPacket(message):
     return getError(code=ErrorCodes.GENERIC_INVALID_PARAMETERS, defaultMessage=message)

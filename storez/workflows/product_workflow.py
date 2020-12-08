@@ -70,7 +70,7 @@ def createProduct(request):
     user = getUserByAccessToken(token)
     body = json.loads(request.body)
     if user is None:
-        return getUnauthenticatedErrorPacket(ErrorCodes.UNAUTHENTICATED_REQUEST,
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
                                             message=getUnauthenticatedErrorPacket())
     
     # check if required fields are present in requets payload

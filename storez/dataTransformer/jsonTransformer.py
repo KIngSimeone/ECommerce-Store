@@ -57,7 +57,7 @@ def transformBusinessList(businessList):
     return results
 
 def transformProduct(product):
-    business = business.businessName + "'s products."  
+    business = product.business.businessName + "'s products."  
 
     return {
         "id": product.id,

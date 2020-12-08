@@ -66,7 +66,7 @@ def transformProduct(product):
         "quantity": product.quantity
     }
 
-def transformProductist(productList):
+def transformProductList(productList):
     results = []
     for product in productList:
         results.append(transformProduct(product))

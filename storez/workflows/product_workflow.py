@@ -8,7 +8,8 @@ from business.models import Product, Business
 
 from business.views import (
                             createProduct as createNewProduct,
-                            getBusinessById
+                            getBusinessById,
+                            getProductForBusiness
                             )
 from apiutility.validators import (
                                     validateKeys,
@@ -49,7 +50,7 @@ from error.errorCodes import (
                     )
 
 from dataTransformer.jsonTransformer import(transformProduct,
-                                            transformProductist
+                                            transformProductList
                                             ) 
 
 
@@ -61,9 +62,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Handles 'product/' endpoints requests
-def productRouter(request):       
+def productRouter(request):   
     if request.method =="POST":
         return createProduct(request)
+
+# Handles 'product/ID' endpoint requets
+def businessProduct(request):
+    if request.method == "GET":
+        return getBusinessProductByBusinessID(request,businessID)
 
 # Create product
 def createProduct(request):
@@ -114,3 +120,44 @@ def getBusinessProductByBusinessID(request,businessID):
     if businessToBeRetrieved == None:
         return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST,message=getBusinessDoesNotExistErrorPacket)
         
+    products = getProductForBusiness(business=businessToBeRetrieved)
+    if request.GET.get('pageBy') == '-1':
+        paginationDetails = {
+            "totalPages": 1,
+            "limit": -1,
+            "currentPage": 1
+        }
+        return paginatedResponse(message="list of all Products",
+                               body=transformProductList(products),
+                               pagination=paginationDetails
+                            )
+    if request.GET.get('pageBy'):
+        pageBy = request.GET.get('pageBy')
+    else:
+        pageBy = 10
+
+    paginator = Paginator(products, pageBy)
+
+    if request.GET.get('page'):
+        pageNum = request.GET.get('page')
+        
+    else:
+        pageNum = 1
+    # try if the page requested exists or is empty
+    try:
+        paginated_products = paginator.page(pageNum)
+
+        paginationDetails = {
+
+            "totalPages": paginator.num_pages,
+            "limit": pageBy,
+            "currentPage": pageNum
+        }
+    except Exception as err:
+        logger.error(err)
+        paginated_products = []
+        paginationDetails = {}
+    
+    return paginatedResponse(message="list of all products",
+                             body=transformProductList(paginated_products),
+                             pagination=paginationDetails)

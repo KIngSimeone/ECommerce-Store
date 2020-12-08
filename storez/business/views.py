@@ -124,7 +124,7 @@ def createProduct(business,productName,productPrice,quantity):
         return None
 
 
-def getProductsForBusiness(business):
+def getProductForBusiness(business):
     try:
         return Product.objects.filter(business=business)
     except Exception as e:

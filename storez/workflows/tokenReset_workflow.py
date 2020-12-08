@@ -62,7 +62,6 @@ def resetToken(request):
     if user is None:
         return resourceNotFoundResponse(ErrorCodes.USER_DOES_NOT_EXIST, message=getUserDoesNotExistErrorPacket())
     
-
     # generate user access token
     userToken = setupUserPasswordResetToken(user)
     if userToken == None:

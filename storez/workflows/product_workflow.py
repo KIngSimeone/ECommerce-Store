@@ -6,8 +6,10 @@ from django.http import HttpResponse, JsonResponse
 from account.views import getUserByAccessToken
 from business.models import Product, Business
 
-from business.views import createProduct as createNewProduct
-
+from business.views import (
+                            createProduct as createNewProduct,
+                            getBusinessById
+                            )
 from apiutility.validators import (
                                     validateKeys,
                                     validateEmailFormat,
@@ -97,3 +99,18 @@ def createProduct(request):
                                             message=getProductCreationFailedErrorPacket())
 
     return successResponse(message="successfully added product", body=transformProduct(createdProduct))
+
+def getBusinessProductByBusinessID(request,businessID):
+    # verify that calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
+                                       message=getUnauthenticatedErrorPacket())
+    
+    # check if business with given ID exists
+    businessToBeRetrieved = getBusinessById(businessID)
+    if businessToBeRetrieved == None:
+        return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST,message=getBusinessDoesNotExistErrorPacket)
+        

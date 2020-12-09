@@ -67,7 +67,7 @@ def productRouter(request):
         return createProduct(request)
 
 # Handles 'product/ID' endpoint requets
-def businessProduct(request):
+def businessProduct(request,businessID):
     if request.method == "GET":
         return getBusinessProductByBusinessID(request,businessID)
 

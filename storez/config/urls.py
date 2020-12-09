@@ -56,7 +56,7 @@ urlpatterns = [
     # business endpoints
     path('business/', userBusinessRouter, name="business-Router"),   
 
-    # product endpoins
+    # product endpoints
     path('product/', productRouter, name="product-router"),
     path('product/<int:businessID>/', businessProduct, name="businessProduct-router"),
     # upload endpoints

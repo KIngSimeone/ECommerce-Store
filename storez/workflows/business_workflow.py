@@ -7,7 +7,7 @@ from django.http import HttpResponse, JsonResponse
 
 from business.models import Business, BusinessAddress
 from account.views import getUserByAccessToken
-import requests
+from datetime import datetime, date, timedelta
 
 from business.views import (
                                 createBusiness as createNewBusiness,
@@ -256,18 +256,27 @@ def updateBusiness(request, businessID):
 def uploadFile(request):
 
     # verify that the calling user has a valid token
-    token = request.headers.get('accessToken')
-    user = getUserByAccessToken(token)
+    #token = request.headers.get('accessToken')
+    #user = getUserByAccessToken(token)
 
-    if token is None:
-        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
+    #if token is None:
+        #return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
 
-    if user is None:
-        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
+    #if user is None:
+        #return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
 
-    filepath = settings.PUBLIC_MEDIA_LOCATION
-    s3Filename = requests.FILES['fileName']
+    if request.FILES.__contains__("image"):
+        image = request.FILES.get("image")
+        imgName = image.name
 
-    upload = uploadFileToS3(filepath=filepath, s3FileName=s3FileName)
+    # verify if the file format to upload is supported
+    if not imgName.lower().endswith(('jpg','jpeg', 'png')):
+        return badRequestResponse(ErrorCodes.FILE_FORMAT_INVALID,
+                                  message="The file format isn't supported for Restaurant Logos")
 
+    # take the file and store it in a temporary folder
+    fileName = str(datetime.now().timestamp()) + imgName
+    filePath = '' + fileName
+    uploadFileToS3(filepath=filePath, s3FileName=fileName)
+    
     return successResponse(message="successfully uploaded file", body="done")

@@ -25,7 +25,9 @@ class ErrorCodes(IntEnum):
     BUSINESS_ADDRESS_CREATION_FIELD = 37
     BUSINESS_DOES_NOT_EXIST = 40
 
-    PRODUCT_CREATION_FAILED = 41
+    FILE_FORMAT_INVALID = 41
+
+
 
 class DefaultErrorMessages(str, Enum):
     UNATHENTICATED_REQUEST = "Your session has expired, Please login"

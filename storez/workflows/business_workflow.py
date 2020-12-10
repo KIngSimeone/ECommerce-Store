@@ -275,7 +275,7 @@ def uploadFile(request):
                                   message="The file format isn't supported for Restaurant Logos")
 
     # take the file and store it in a temporary folder
-    fileName = str(datetime.now().timestamp()) + imgName
+    fileName = imgName
     filePath = '' + fileName
     try:
         uploadFileToS3(filepath=filePath, s3FileName=fileName)

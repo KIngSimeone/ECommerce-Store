@@ -56,7 +56,6 @@ class DefaultErrorMessages(str, Enum):
     BUSINESS_ADDRESS_CREATION_FIELD = "Something went wrong, could not create the business address successfully"
     BUSINESS_DOES_NOT_EXIST = "Restaurant does not exist."
 
-
     INVALID_COUNTRY_CODE = "The country code specified is invalid"
     INVALID_CURRENCY_CODE = "The currency code specified is invalid"
 
@@ -140,3 +139,5 @@ def getError(code, defaultMessage):
 
     except IntegrityError:
         return {'errorCode': code.value, 'message': defaultMessage}
+
+        

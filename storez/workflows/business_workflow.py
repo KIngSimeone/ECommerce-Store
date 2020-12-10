@@ -265,6 +265,9 @@ def uploadFile(request):
     #if user is None:
         #return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
 
+
+    listOfFileRecord = list()
+
     if request.FILES.__contains__("image"):
         image = request.FILES.get("image")
         imgName = image.name
@@ -274,14 +277,18 @@ def uploadFile(request):
         return badRequestResponse(ErrorCodes.FILE_FORMAT_INVALID,
                                   message="The file format isn't supported for Restaurant Logos")
 
-    # take the file and store it in a temporary folder
-    fileName = imgName
-    filePath = '' + fileName
-    try:
-        uploadFileToS3(filepath=filePath, s3FileName=fileName)
-    except:
-        return internalServerErrorResponse(ErrorCodes.FILE_UPLOAD_FAILED,
-                                           message=DefaultErrorMessages.FILE_UPLOAD_FAILED)
+    listOfFileRecord.append((image, 'others'))
 
+    for item in listOfFileRecord:
+        file = item[0]
+        typeOfFile = item[1]
+
+        name = file.name
+        
+        # take the file and store it in a temporary folder
+        fileName = str(datetime.now().timestamp()) + name
+        filePath = '' + fileName
+
+        uploadFileToS3(filepath=filePath, s3FileName=fileName)
     
     return successResponse(message="successfully uploaded file", body="done")

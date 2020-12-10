@@ -277,6 +277,11 @@ def uploadFile(request):
     # take the file and store it in a temporary folder
     fileName = str(datetime.now().timestamp()) + imgName
     filePath = '' + fileName
-    uploadFileToS3(filepath=filePath, s3FileName=fileName)
+    try:
+        uploadFileToS3(filepath=filePath, s3FileName=fileName)
+    except:
+        return internalServerErrorResponse(ErrorCodes.FILE_UPLOAD_FAILED,
+                                           message=DefaultErrorMessages.FILE_UPLOAD_FAILED)
+
     
     return successResponse(message="successfully uploaded file", body="done")

@@ -26,6 +26,7 @@ class ErrorCodes(IntEnum):
     BUSINESS_DOES_NOT_EXIST = 40
 
     FILE_FORMAT_INVALID = 41
+    FILE_UPLOAD_FAILED = 42
 
 
 
@@ -56,14 +57,14 @@ class DefaultErrorMessages(str, Enum):
     BUSINESS_DOES_NOT_EXIST = "Restaurant does not exist."
 
 
-
-
     INVALID_COUNTRY_CODE = "The country code specified is invalid"
     INVALID_CURRENCY_CODE = "The currency code specified is invalid"
 
     ORDER_CREATION_FAILED = "Something went wrong, could not create the order for merchant successfully"
     ORDER_DELETION_FAILED = "Something went wrong, could not delete the order for merchant successfully"
     ORDER_DOES_NOT_EXIST = "The requested order does not exist"
+
+    FILE_UPLOAD_FAILED="Something went wrong, could not upload file"
 
 
 # AUTH ERROR PACKET

@@ -90,8 +90,6 @@ def passwordResetRouter(request):
     if request.method == "POST":
         return passwordReset(request)
 
-
-
 # Create User
 def createUser(request):
     # get Json information passed in

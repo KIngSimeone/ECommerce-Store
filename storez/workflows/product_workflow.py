@@ -153,6 +153,7 @@ def getBusinessProductByBusinessID(request,businessID):
             "limit": pageBy,
             "currentPage": pageNum
         }
+
     except Exception as err:
         logger.error(err)
         paginated_products = []

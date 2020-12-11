@@ -108,7 +108,6 @@ def uploadFileToS3(filepath, s3FileName):
         return False
 
 ## PRODUCT VIEWS
-
 def createProduct(business,productName,productPrice,quantity):
     try:
         product = Product(

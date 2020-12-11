@@ -286,7 +286,7 @@ def uploadFile(request):
         name = file.name
         
         # take the file and store it in a temporary folder
-        fileName = name
+        fileName = str(datetime.now().timestamp()) + name
         filePath = '' + fileName
 
         uploadFileToS3(filepath=filePath, s3FileName=file)

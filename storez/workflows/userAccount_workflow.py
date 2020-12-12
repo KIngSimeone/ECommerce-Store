@@ -170,6 +170,9 @@ def updateUser(request, userID):
     body = json.loads(request.body)
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
+
+    if token is None:
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
    
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
@@ -270,6 +273,9 @@ def getAllUsers(request):
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
 
+    if token is None:
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
+
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
     
@@ -317,6 +323,9 @@ def getUser(request, userID):
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
     
+    if token is None:
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
+
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
     
@@ -332,6 +341,9 @@ def deleteUser(request, userID):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
+
+    if token is None:
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
 
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,

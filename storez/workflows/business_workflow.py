@@ -85,6 +85,9 @@ def createBusiness(request):
     token = request.headers.get('accessToken')
     user = getUserByAccessToken(token)
 
+    if token is None:
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
+
     if user is None:
         return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
                                        message=getUnauthenticatedErrorPacket())
@@ -284,7 +287,7 @@ def uploadFile(request):
         typeOfFile = item[1]
 
         name = file.name
-        # File dna
+
         # take the file and store it in a temporary folder
         fileName = str(datetime.now().timestamp()) + name
         filePath = '' + fileName

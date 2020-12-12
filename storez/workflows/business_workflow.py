@@ -284,7 +284,8 @@ def uploadFile(request):
         typeOfFile = item[1]
 
         name = file.name
-        #comment"
+
+    #cvop[]]]
         # take the file and store it in a temporary folder
         fileName = str(datetime.now().timestamp()) + name
         filePath = '' + fileName

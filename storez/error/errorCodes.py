@@ -131,6 +131,7 @@ def getGenericInvalidParametersErrorPacket(message):
     return getError(code=ErrorCodes.GENERIC_INVALID_PARAMETERS, defaultMessage=message)
 
 
+
 ## base error
 def getError(code, defaultMessage):
     try:

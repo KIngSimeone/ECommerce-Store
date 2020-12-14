@@ -275,12 +275,12 @@ def uploadFile(request):
         image = request.FILES.get("image")
         imgName = image.name
 
-    # verify if the file format to upload is supported
-    if not imgName.lower().endswith(('jpg','jpeg', 'png')):
-        return badRequestResponse(ErrorCodes.FILE_FORMAT_INVALID,
-                                  message="The file format isn't supported for Restaurant Logos")
+        # verify if the file format to upload is supported
+        if not imgName.lower().endswith(('jpg','jpeg', 'png')):
+            return badRequestResponse(ErrorCodes.FILE_FORMAT_INVALID,
+                                    message="The file format isn't supported for Restaurant Logos")
 
-    listOfFileRecord.append((image, 'others'))
+        listOfFileRecord.append((image, 'others'))
 
     for item in listOfFileRecord:
         file = item[0]

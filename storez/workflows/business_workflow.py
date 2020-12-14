@@ -292,6 +292,6 @@ def uploadFile(request):
         fileName = str(datetime.now().timestamp()) + name
         filePath = '' + fileName
 
-        uploadFileToS3(filepath=filePath, s3FileName=file)
+        uploadFileToS3(filepath=filePath, s3FileName=fileName)
     
     return successResponse(message="successfully uploaded file", body="done")

@@ -292,6 +292,8 @@ def uploadFile(request):
         fileName = str(datetime.now().timestamp()) + name
         filePath = '' + fileName
 
-        uploadFileToS3(filepath=filePath, s3FileName=fileName)
+        if not uploadFileToS3(filepath=filePath, s3FileName=fileName):
+            return internalServerErrorResponse(ErrorCodes.FILE_UPLOAD_FAILED,
+                                                message=DefaultErrorMessages.FILE_UPLOAD_FAILED)
     
     return successResponse(message="successfully uploaded file", body="done")

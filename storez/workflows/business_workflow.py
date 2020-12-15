@@ -90,8 +90,7 @@ def uploadFileRouter(request):
 def getFile(request,businessID):
     if request.method == "GET":
         return getBusinessLogoByBusinessID(request, businessID)
-
-
+        
 # Create Business
 def createBusiness(request):
     # verify that the calling user has a valid token

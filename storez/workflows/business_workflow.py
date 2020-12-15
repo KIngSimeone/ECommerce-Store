@@ -2,12 +2,10 @@
 import os
 import boto3
 import json
-import io
-from base64 import encodebytes
-from PIL import Image
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
+from boto3 import client
 
 
 
@@ -267,13 +265,13 @@ def updateBusiness(request, businessID):
 def uploadFile(request):
 
     # verify that the calling user has a valid token
-    #token = request.headers.get('accessToken')
-    #user = getUserByAccessToken(token)
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
 
-    #if token is None:
+    if token is None:
         #return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
 
-    #if user is None:
+    if user is None:
         #return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
 
 

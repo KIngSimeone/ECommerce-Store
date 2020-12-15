@@ -277,10 +277,10 @@ def uploadFile(request):
     user = getUserByAccessToken(token)
 
     if token is None:
-        #return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
 
     if user is None:
-        #return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST, message=getUnauthenticatedErrorPacket())
 
 
     listOfFileRecord = list()

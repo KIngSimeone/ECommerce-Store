@@ -5,6 +5,7 @@ from .models import(
                     Business,
                     BusinessAddress,
                     Product,
+                    BusinessLogo
                     )
 from django.utils import timezone
 from datetime import datetime, date, timedelta
@@ -129,5 +130,13 @@ def getProductForBusiness(business):
         return Product.objects.filter(business=business)
     except Exception as e:
         logger.error('getProductForBusiness@error')
+        logger.error(e)
+        return None
+
+def getBusinessLogo(business):
+    try:
+        return BusinessLogo.objects.filter(business=business)
+    except Exception as e:
+        logger.error('getBusinessLogo@error')
         logger.error(e)
         return None

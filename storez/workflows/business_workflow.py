@@ -86,6 +86,12 @@ def uploadFileRouter(request):
     if request.method =="POST":
         return uploadFile(request)
 
+# Handles 'file/' endpoints requests
+def getFile(request):
+    if request.method == "GET":
+        return getBusinessLogoByBusinessID(request)
+
+
 # Create Business
 def createBusiness(request):
     # verify that the calling user has a valid token

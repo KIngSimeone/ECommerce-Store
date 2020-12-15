@@ -8,6 +8,6 @@ from .models import (
 )
 admin.site.register(Business)
 admin.site.register(BusinessAddress)
-admin.site.register(Businesslogo)
+admin.site.register(BusinessLogo)
 admin.site.register(Product)
 

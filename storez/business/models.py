@@ -39,7 +39,8 @@ class Product(models.Model):
         name = str(self.productName)
         return name
 
-class Photo(models.Model):
+class BusinessLogo(models.Model):
+    business = models.ForeignKey(Business, on_delete = models.SET_NULL, null=True)
+    logo = models.FileField()
     created_at = models.DateTimeField(auto_now_add=True) 
-    title = models.CharField(max_length=100)
-    photo = models.FileField()
+  

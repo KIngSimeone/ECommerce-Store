@@ -28,6 +28,8 @@ class ErrorCodes(IntEnum):
     FILE_FORMAT_INVALID = 41
     FILE_UPLOAD_FAILED = 42
 
+    LOGO_DOES_NOT_EXIST = 43
+
 
 
 class DefaultErrorMessages(str, Enum):
@@ -54,7 +56,7 @@ class DefaultErrorMessages(str, Enum):
     BUSINESS_ALREADY_EXIST = "A restaurant with same {} already exists"
     BUSINESS_CREATION_FAILED = "Something went wrong, could not create the business successfully"
     BUSINESS_ADDRESS_CREATION_FIELD = "Something went wrong, could not create the business address successfully"
-    BUSINESS_DOES_NOT_EXIST = "Restaurant does not exist."
+    BUSINESS_DOES_NOT_EXIST = "Business does not exist."
 
     INVALID_COUNTRY_CODE = "The country code specified is invalid"
     INVALID_CURRENCY_CODE = "The currency code specified is invalid"
@@ -64,6 +66,7 @@ class DefaultErrorMessages(str, Enum):
     ORDER_DOES_NOT_EXIST = "The requested order does not exist"
 
     FILE_UPLOAD_FAILED="Something went wrong, could not upload file"
+    LOGO_DOES_NOT_EXIST="Business does not have a logo"
 
 
 # AUTH ERROR PACKET
@@ -120,6 +123,11 @@ def getBusinessCreationAddressFailedErrorPacket():
 def getBusinessDoesNotExistErrorPacket():
     return getError(code=ErrorCodes.BUSINESS_DOES_NOT_EXIST,
                     defaultMessage = DefaultErrorMessages.BUSINESS_DOES_NOT_EXIST)
+
+## LOGO ERROR PACKETS
+def getLogoDoesNotExistErrorPacket():
+    return getError(code=ErrorCodes.LOGO_DOES_NOT_EXIST,
+                    defaultMessage=DefaultErrorMessages.LOGO_DOES_NOT_EXIST)
 
 ## PRODUCT ERROR PACKETS
 def getProductCreationFailedErrorPacket():

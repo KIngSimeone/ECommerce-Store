@@ -47,7 +47,8 @@ from error.errorCodes import (
                         getBusinessAlreadyExistErrorPacket,
                         getBusinessCreationFailedErrorPacket,
                         getBusinessCreationAddressFailedErrorPacket,
-                        getBusinessDoesNotExistErrorPacket    
+                        getBusinessDoesNotExistErrorPacket,
+                        getLogoDoesNotExistErrorPacket 
                     )
 
 from apiutility.responses import (
@@ -324,4 +325,5 @@ def getBusinessLogoByBusinessID(request,businessID):
         return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST,message=getBusinessDoesNotExistErrorPacket())
     
     logo = getBusinessLogo(business=businessToBeRetrieved)
-
+    if logo == None:
+        return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())

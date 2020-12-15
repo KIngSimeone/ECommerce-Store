@@ -125,7 +125,7 @@ def getBusinessProductByBusinessID(request,businessID):
     # check if business with given ID exists
     businessToBeRetrieved = getBusinessById(businessID)
     if businessToBeRetrieved == None:
-        return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST,message=getBusinessDoesNotExistErrorPacket)
+        return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST,message=getBusinessDoesNotExistErrorPacket())
         
     products = getProductForBusiness(business=businessToBeRetrieved)
     if request.GET.get('pageBy') == '-1':

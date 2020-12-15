@@ -2,8 +2,14 @@
 import os
 import boto3
 import json
+import io
+from base64 import encodebytes
+from PIL import Image
+
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
+
+
 
 from business.models import Business, BusinessAddress
 from account.views import getUserByAccessToken
@@ -16,7 +22,8 @@ from business.views import (
                                 getBusinessByPhone,
                                 getBusinessById,
                                 listAllBusinesses,
-                                uploadFileToS3
+                                uploadFileToS3,
+                                getBusinessLogo
                                )
 
 from apiutility.validators import (
@@ -256,6 +263,7 @@ def updateBusiness(request, businessID):
 
 """
 
+
 def uploadFile(request):
 
     # verify that the calling user has a valid token
@@ -297,3 +305,25 @@ def uploadFile(request):
                                                 message=DefaultErrorMessages.FILE_UPLOAD_FAILED)
     
     return successResponse(message="successfully uploaded file", body="done")
+
+
+
+def getBusinessLogoByBusinessID(request,businessID):
+    # verify that the calling user has a valid token
+    token = request.headers.get('accessToken')
+    user = getUserByAccessToken(token)
+
+    if token is None:
+        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")
+    
+    if user is None:
+        return unAuthenticatedResponse(ErrorCodes.UNAUTHENTICATED_REQUEST,
+                                       message=getUnauthenticatedErrorPacket())
+
+    # check if business with given ID exists
+    businessToBeRetrieved = getBusinessById(businessID)
+    if businessToBeRetrieved == None:
+        return resourceNotFoundResponse(ErrorCodes.BUSINESS_DOES_NOT_EXIST,message=getBusinessDoesNotExistErrorPacket())
+    
+    logo = getBusinessLogo(business=businessToBeRetrieved)
+

@@ -21,7 +21,8 @@ from business.views import (
                                 getBusinessById,
                                 listAllBusinesses,
                                 uploadFileToS3,
-                                getBusinessLogo
+                                getBusinessLogo,
+                                getClient
                                )
 
 from apiutility.validators import (
@@ -303,7 +304,6 @@ def uploadFile(request):
                                                 message=DefaultErrorMessages.FILE_UPLOAD_FAILED)
     
     return successResponse(message="successfully uploaded file", body="done")
-
 
 
 def getBusinessLogoByBusinessID(request,businessID):

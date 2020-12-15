@@ -143,4 +143,9 @@ def getBusinessLogo(business):
         return None
 
 def getClient():
-    return client
+    return client(
+        's3',
+        'us-east-2',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+    )

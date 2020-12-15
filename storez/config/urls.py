@@ -62,5 +62,5 @@ urlpatterns = [
     path('product/<int:businessID>/', businessProduct, name="businessProduct-router"),
     # upload endpoints
     path('upload/', uploadFileRouter, name="upload-router"),
-    path('file/', getFile, name="get-file-router"),
+    path('file/<int:businessID>', getFile, name="get-file-router"),
 ]

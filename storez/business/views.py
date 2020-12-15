@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from boto3 import client
 
 from django.shortcuts import render
 from .models import(
@@ -140,3 +141,6 @@ def getBusinessLogo(business):
         logger.error('getBusinessLogo@error')
         logger.error(e)
         return None
+
+def getClient():
+    return client

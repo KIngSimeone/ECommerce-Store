@@ -136,7 +136,7 @@ def getProductForBusiness(business):
 
 def getBusinessLogo(business):
     try:
-        return BusinessLogo.objects.filter(business=business)
+        return BusinessLogo.objects.get(business=business)
     except Exception as e:
         logger.error('getBusinessLogo@error')
         logger.error(e)

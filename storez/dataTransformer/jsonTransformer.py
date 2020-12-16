@@ -72,7 +72,8 @@ def transformLogo(logo):
 
     return {
         "business": logo.business.businessName,
-        "logo": settings.MEDIA_URL + str(logo.logo) 
+        "logo":logo.logo
+        #"logo": settings.MEDIA_URL + str(logo.logo) 
     }
 
 def transformProductList(productList):

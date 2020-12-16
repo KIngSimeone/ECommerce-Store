@@ -335,5 +335,5 @@ def getBusinessLogoByBusinessID(request,businessID):
     print(logo.logo)
     
     # Serve the logo Image
-    return logo
+    return successResponse(message="successfully got logo", body=transformLogo(logo))
 

@@ -8,7 +8,6 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from sendfile import sendfile
 
-
 from business.models import Business, BusinessAddress
 from account.views import getUserByAccessToken
 from datetime import datetime, date, timedelta
@@ -332,8 +331,8 @@ def getBusinessLogoByBusinessID(request,businessID):
     logo = getBusinessLogo(business=businessToBeRetrieved)
     if logo == None:
         return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())
+    print(logo.logo)
     
     # Serve the logo Image
-    return send_file(io.BytesIO(logo.read()))
-                    
+    return logo
 

@@ -66,6 +66,14 @@ def transformProduct(product):
         "quantity": product.quantity
     }
 
+def transformLogo(logo):
+    business = logo.business.businessName + "'Logo."
+
+    return {
+        "business": logo.business.businessName
+        "logo": logo.logo
+    }
+
 def transformProductList(productList):
     results = []
     for product in productList:

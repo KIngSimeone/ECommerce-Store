@@ -63,6 +63,7 @@ from apiutility.responses import (
 
 from dataTransformer.jsonTransformer import(transformBusiness,
                                             transformBusinessList,
+                                            transformLogo
                                             ) 
 
 from django.core.paginator import Paginator

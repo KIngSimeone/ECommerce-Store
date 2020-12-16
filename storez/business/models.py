@@ -42,5 +42,8 @@ class Product(models.Model):
 class BusinessLogo(models.Model):
     business = models.ForeignKey(Business, on_delete = models.SET_NULL, null=True)
     logo = models.FileField()
-    created_at = models.DateTimeField(auto_now_add=True) 
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.business) + "'s Logo"
   

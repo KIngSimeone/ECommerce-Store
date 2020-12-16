@@ -70,8 +70,8 @@ def transformLogo(logo):
     business = logo.business.businessName + "'Logo."
 
     return {
-        "business": logo.business.businessName
-        "logo": logo.logo
+        "business": logo.business.businessName,
+        "logo": logo.Logo
     }
 
 def transformProductList(productList):

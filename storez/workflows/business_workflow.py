@@ -90,12 +90,12 @@ def uploadFileRouter(request):
 def getFile(request,businessID):
     if request.method == "GET":
         return getBusinessLogoByBusinessID(request, businessID)
-        
+
 # Create Business
 def createBusiness(request):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')
-    user = getUserByAccessToken(token)
+    user = getUserByAccessToken(token) 
 
     if token is None:
         return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS, message="accessToken is missing in the request headers")

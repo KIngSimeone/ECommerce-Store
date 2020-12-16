@@ -1,4 +1,5 @@
 from apiutility.formatters import toUiReadableDateFormat
+from django.conf import settings
 
 
 def generateLoginResponse(user, userAccessToken):
@@ -71,7 +72,7 @@ def transformLogo(logo):
 
     return {
         "business": logo.business.businessName,
-        "logo": logo.Logo
+        "logo": settings.MEDIA_URL + str(logo.logo) 
     }
 
 def transformProductList(productList):

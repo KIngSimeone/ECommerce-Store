@@ -1,8 +1,6 @@
 FROM python:3
 ENV PYTHONUNBUFFERED=1
-WORKDIR /storez
-COPY requirements.txt /storez/
+WORKDIR /c:/users/user/documents/storez
+COPY requirements.txt /c:/users/user/documents/storez/
 RUN pip install -r requirements.txt
-COPY . /storez/
-
-
+COPY . /c:/users/user/documents/storez/

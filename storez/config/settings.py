@@ -179,4 +179,5 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'secret'
 ]
 
-
+# Celery location to find redis
+CELERY_BROKER_URL = 'redis://localhost:6379'

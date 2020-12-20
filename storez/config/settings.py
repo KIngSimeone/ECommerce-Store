@@ -167,11 +167,11 @@ else:
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-
 APPEND_SLASH = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 
+# Add accessToken and secret to cors headers
 from corsheaders.defaults import default_headers
 
 CORS_ALLOW_HEADERS = list(default_headers) + [

@@ -161,7 +161,7 @@ if  USE_S3 == 'TRUE':
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
-else:  
+else:  s
     MEDIA_URL = '/mediafiles/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
@@ -176,7 +176,7 @@ from corsheaders.defaults import default_headers
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'accessToken',
-    'secret'
+    'secret' 
 ]
 
 # Celery location to find redis

@@ -187,3 +187,6 @@ SESSION_COOKIE_SECURE = True
 
 # secure ssl redirect set as true
 SECURE_SSL_REDIRECT = True
+
+# Prevent sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True

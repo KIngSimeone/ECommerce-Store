@@ -190,3 +190,6 @@ SECURE_SSL_REDIRECT = True
 
 # Prevent sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# secure hsts seconds set
+SECURE_HSTS_SECONDS = 3600

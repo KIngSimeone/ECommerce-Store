@@ -191,5 +191,7 @@ SECURE_SSL_REDIRECT = True
 # Prevent sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-# secure hsts seconds set
+# secure hsts settings
 SECURE_HSTS_SECONDS = 3600
+
+SECURE_HSTS_PRELOAD = True

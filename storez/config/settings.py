@@ -184,3 +184,6 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 
 # session cookie set as true
 SESSION_COOKIE_SECURE = True
+
+# secure ssl redirect set as true
+SECURE_SSL_REDIRECT = True

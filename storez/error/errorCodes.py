@@ -78,7 +78,7 @@ def getUnauthorizedErrorPacket():
     return getError(code = ErrorCodes.UNAUTHORIZED_REQUEST,
                     defaultMessage = DefaultErrorMessages.UNAUTHORIZED_REQUEST)
 
-## ACOUNT MANAGEMENT ERROR PACKET
+## ACCOUNT MANAGEMENT ERROR PACKET
 def getInvalidCredentialsErrorPacket():
     return getError(code = ErrorCodes.INVALID_CREDENTIALS,
                     defaultMessage = DefaultErrorMessages.INVALID_CREDENTIALS)
@@ -137,8 +137,6 @@ def getProductCreationFailedErrorPacket():
 ## generic invalid error
 def getGenericInvalidParametersErrorPacket(message):
     return getError(code=ErrorCodes.GENERIC_INVALID_PARAMETERS, defaultMessage=message)
-
-
 
 ## base error
 def getError(code, defaultMessage):

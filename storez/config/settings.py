@@ -181,19 +181,3 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 # Celery location to find redis
 CELERY_BROKER_URL = 'redis://localhost:6379'
-
-# session cookie set as true
-SESSION_COOKIE_SECURE = True
-
-# secure ssl redirect set as true
-SECURE_SSL_REDIRECT = True
-
-# Prevent sniffing
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-# secure hsts settings
-SECURE_HSTS_SECONDS = 3600
-
-SECURE_HSTS_PRELOAD = True
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True

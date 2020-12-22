@@ -267,7 +267,6 @@ def updateUser(request, userID):
                                            message=getUserUpdateFailedErrorPacket())
     return successResponse(message="successfully updated user", body=transformUser(updatedUser))
 
-
 def getAllUsers(request):
     # verify that the calling user has a valid token
     token = request.headers.get('accessToken')

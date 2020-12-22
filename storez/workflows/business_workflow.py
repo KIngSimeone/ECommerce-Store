@@ -267,7 +267,6 @@ def updateBusiness(request, businessID):
                                         message=getBusinessAlreadyExistErrorPacket('businessPhone'))
 """
 
-
 def uploadFile(request):
 
     # verify that the calling user has a valid token

@@ -8,7 +8,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 def createUserAccount(user):
     try:
         if user is None:

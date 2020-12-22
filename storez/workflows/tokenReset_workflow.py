@@ -41,8 +41,6 @@ def validateTokenURLRouter(request):
     if request.method == "POST":
         return validateToken(request)
 
-
-
 def resetToken(request):
     # get the request payload
     body = json.loads(request.body)
@@ -72,7 +70,6 @@ def resetToken(request):
 
     return successResponse(message="An email was sent to your account if you have an account with us", body={})
     
-
 def validateToken(request):
     # get the request payload
     body = json.loads(request.body)

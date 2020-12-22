@@ -4,7 +4,6 @@ from account.models import (
                             User,
                             )
                             
-
 # Create your models here.
 
 class UserAccount(models.Model):

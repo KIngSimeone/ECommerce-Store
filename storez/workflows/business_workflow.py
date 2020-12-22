@@ -265,7 +265,6 @@ def updateBusiness(request, businessID):
     if getBusinessByPhone(body['businessPhone']) is not None:
         return resourceConflictResponse(errorCode=ErrorCodes.BUSINESS_ALREADY_EXIST,
                                         message=getBusinessAlreadyExistErrorPacket('businessPhone'))
-
 """
 
 

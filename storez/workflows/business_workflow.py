@@ -334,5 +334,6 @@ def getBusinessLogoByBusinessID(request,businessID):
         return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())
     
     # Serve the logo Image
-    return successResponse(message="successfully got logo", body=transformLogo(logo))
+    #return successResponse(message="successfully got logo", body=transformLogo(logo))
+    return logo
 

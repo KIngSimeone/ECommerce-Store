@@ -14,7 +14,7 @@ from apiutility.responses import (
 from dataTransformer.jsonTransformer import (
                                              generateLoginResponse,
                                             )
-                                            
+
 from apiutility.validators import validateKeys, validateThatStringIsEmpty
 from error.errorCodes import (
                              ErrorCodes,
@@ -32,7 +32,6 @@ def authenticationRouter(request):
     if request.method == 'POST':
         ## call authenticate
         return login(request)
-
 
 # Authenticate User
 def login(request):

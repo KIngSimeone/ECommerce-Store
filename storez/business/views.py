@@ -125,7 +125,6 @@ def createProduct(business,productName,productPrice,quantity):
         logger.error(e)
         return None
 
-
 def getProductForBusiness(business):
     try:
         return Product.objects.filter(business=business)
@@ -149,4 +148,3 @@ def getClient():
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
     )
-

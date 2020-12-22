@@ -13,9 +13,8 @@ from apiutility.responses import (
 
 from dataTransformer.jsonTransformer import (
                                              generateLoginResponse,
-                                             #generateLoginResponseManager,
-                                             #generateLoginResponseController
                                             )
+                                            
 from apiutility.validators import validateKeys, validateThatStringIsEmpty
 from error.errorCodes import (
                              ErrorCodes,

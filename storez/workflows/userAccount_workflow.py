@@ -226,7 +226,6 @@ def updateUser(request, userID):
         return badRequestResponse(errorCode=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
                                 message=getUserCategoryInvalidErrorPacket())
 
-
     # check that username specified does not belong to another user
     userName = getUserByUserName(
         userName=body['userName'])

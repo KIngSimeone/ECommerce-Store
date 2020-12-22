@@ -4,10 +4,6 @@ import json
 from account.views import (
                            authenticateUser,
                            generateUserAccessToken,
-                           #authenticateManager,
-                           #generateManagerAccessToken,
-                           #authenticateController,
-                           #generateControllerAccessToken  
                           )
 
 from apiutility.responses import (

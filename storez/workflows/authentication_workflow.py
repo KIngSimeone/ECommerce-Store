@@ -61,5 +61,4 @@ def login(request):
         return badRequestResponse(ErrorCodes.INVALID_CREDENTIALS, message=getInvalidCredentialsErrorPacket())
 
     userAccessToken = generateUserAccessToken(user)
-
     return successResponse(message="successfully authenticated", body=generateLoginResponse(user, userAccessToken))

@@ -141,6 +141,14 @@ def getBusinessLogo(business):
         logger.error(e)
         return None
 
+def getBusinessAddress(business):
+    try:
+        return BusinessAddress.objects.get(business=business)
+    except Exception as e:
+        logger.error('getBusinessAddress@error')
+        logger.error(e)
+        return None
+
 def getClient():
     return client(
         's3',

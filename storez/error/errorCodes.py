@@ -29,6 +29,7 @@ class ErrorCodes(IntEnum):
     FILE_UPLOAD_FAILED = 42
 
     LOGO_DOES_NOT_EXIST = 43
+    ADDRESS_DOES_NOT_EXIST = 44
 
 
 
@@ -67,6 +68,7 @@ class DefaultErrorMessages(str, Enum):
 
     FILE_UPLOAD_FAILED="Something went wrong, could not upload file"
     LOGO_DOES_NOT_EXIST="Business does not have a logo"
+    ADDRESS_DOES_NOT_EXIST="Business does not have an address"
 
 
 # AUTH ERROR PACKET
@@ -128,6 +130,11 @@ def getBusinessDoesNotExistErrorPacket():
 def getLogoDoesNotExistErrorPacket():
     return getError(code=ErrorCodes.LOGO_DOES_NOT_EXIST,
                     defaultMessage=DefaultErrorMessages.LOGO_DOES_NOT_EXIST)
+
+## ADDRESS ERROR PACKTES
+def getAddressDoesNotExistErrorPacket():
+    return getError(code=ErrorCodes.ADDRESS_DOES_NOT_EXIST,
+                    defaultMessage=DefaultErrorMessages.ADDRESS_DOES_NOT_EXIST)
 
 ## PRODUCT ERROR PACKETS
 def getProductCreationFailedErrorPacket():

@@ -48,7 +48,8 @@ from error.errorCodes import (
                         getBusinessCreationFailedErrorPacket,
                         getBusinessCreationAddressFailedErrorPacket,
                         getBusinessDoesNotExistErrorPacket,
-                        getLogoDoesNotExistErrorPacket 
+                        getLogoDoesNotExistErrorPacket,
+                        getAddressDoesNotExistErrorPacket
                     )
 
 from apiutility.responses import (

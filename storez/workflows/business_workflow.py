@@ -333,6 +333,8 @@ def getBusinessLogoByBusinessID(request,businessID):
         return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())
 
     # get business address
-
+    address = getBusinessAddress(business=businessToBeRetrieved)
+    if address == None:
+        return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
     return FileResponse(logo.logo)
 

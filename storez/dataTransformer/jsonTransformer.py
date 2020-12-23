@@ -83,7 +83,6 @@ def transformLogo(logo,address,logoImg):
         "businessaddress": address.street + ", " + address.city + ", " + address.state + ", " + address.country
     }
 
-
 def transformProductList(productList):
     results = []
     for product in productList:

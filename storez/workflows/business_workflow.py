@@ -3,6 +3,7 @@ import os
 import boto3
 import json
 import io
+import PIL
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse, FileResponse
@@ -338,6 +339,10 @@ def getBusinessLogoByBusinessID(request,businessID):
     address = getBusinessAddress(business=businessToBeRetrieved)
     if address == None:
         return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
+    img = PIL.Image.open(logo.logo)
+    output = io.BytesIO()
+    img.save(output, format="png","jpg","jpeg")
+    img_as_string = output.getvalue()   
 
-    return successimgResponse(message="successfully returned restaurant", body=transformLogo(logo=logo,address=address))
+    return HttpResponse(img_as_string[:20])
 

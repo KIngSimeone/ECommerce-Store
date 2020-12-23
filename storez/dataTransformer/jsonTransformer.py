@@ -79,7 +79,7 @@ def transformLogo(logo,address):
 def transformLogo(logo,address,logoImg):
     return {
         "business": logo.business.businessName,
-        "logo": logo_img,
+        "logo": logoImg,
         "businessaddress": address.street + ", " + address.city + ", " + address.state + ", " + address.country
     }
 

@@ -1,5 +1,6 @@
 from apiutility.formatters import toUiReadableDateFormat
 from django.conf import settings
+from django.http import FileResponse
 
 
 def generateLoginResponse(user, userAccessToken):
@@ -67,17 +68,14 @@ def transformProduct(product):
         "quantity": product.quantity
     }
 
-def transformLogo(logo):
-    business = logo.business.businessName + "'Logo."
-
+def transformLogo(logo,address):
     return {
         "business": logo.business.businessName,
-        "logo": logo.logo
+        "logo": FileResponse(logo.logo)
+        "businessaddress": address.street + ", " + address.city + ", " address.state + ", " + address.country
     }
 
 def transformProductList(productList):
     results = []
     for product in productList:
         results.append(transformProduct(product))
-
-    return results

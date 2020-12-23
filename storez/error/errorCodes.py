@@ -131,7 +131,7 @@ def getLogoDoesNotExistErrorPacket():
     return getError(code=ErrorCodes.LOGO_DOES_NOT_EXIST,
                     defaultMessage=DefaultErrorMessages.LOGO_DOES_NOT_EXIST)
 
-## ADDRESS ERROR PACKTES
+## ADDRESS ERROR PACKETS
 def getAddressDoesNotExistErrorPacket():
     return getError(code=ErrorCodes.ADDRESS_DOES_NOT_EXIST,
                     defaultMessage=DefaultErrorMessages.ADDRESS_DOES_NOT_EXIST)

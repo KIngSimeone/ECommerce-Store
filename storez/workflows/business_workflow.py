@@ -5,7 +5,7 @@ import json
 import io
 
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, FileResponse
 from sendfile import sendfile
 
 from business.models import Business, BusinessAddress
@@ -331,5 +331,5 @@ def getBusinessLogoByBusinessID(request,businessID):
     if logo == None:
         return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())
     
-    return logo
+    return FileResponse(logo)
 

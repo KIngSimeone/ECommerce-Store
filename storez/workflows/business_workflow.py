@@ -339,10 +339,17 @@ def getBusinessLogoByBusinessID(request,businessID):
     address = getBusinessAddress(business=businessToBeRetrieved)
     if address == None:
         return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
+    
     img = Image.open(logo.logo)
     output = io.BytesIO()
     img.save(output, format="png")
     img_as_string = output.getvalue()   
 
-    return HttpResponse(str(img_as_string[:20]))
+    logo_img = (str(img_as_string[:20]))
+
+    return successResponse(message="successfully created restaurant", body=transformLogo(logo=logo,address=address,logoImg=logo_img))
+
+    
+    
+    
 

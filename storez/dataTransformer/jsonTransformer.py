@@ -71,8 +71,8 @@ def transformProduct(product):
 def transformLogo(logo,address):
     return {
         "business": logo.business.businessName,
-        "logo": FileResponse(logo.logo)
-        "businessaddress": address.street + ", " + address.city + ", " address.state + ", " + address.country
+        "logo": FileResponse(logo.logo),
+        "businessaddress": address.street + ", " + address.city + ", " + address.state + ", " + address.country
     }
 
 def transformProductList(productList):

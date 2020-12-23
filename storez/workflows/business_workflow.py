@@ -21,7 +21,7 @@ from business.views import (
                                 listAllBusinesses,
                                 uploadFileToS3,
                                 getBusinessLogo,
-                                getBusinessAddress
+                                getBusinessAddress,
                                 getClient
                                )
 
@@ -60,7 +60,8 @@ from apiutility.responses import (
                     successResponse,
                     resourceNotFoundResponse,
                     paginatedResponse,
-                    internalServerErrorResponse
+                    internalServerErrorResponse,
+                    successimgResponse
                 )
 
 from dataTransformer.jsonTransformer import(transformBusiness,
@@ -338,5 +339,5 @@ def getBusinessLogoByBusinessID(request,businessID):
     if address == None:
         return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
 
-    return successResponse(message="successfully returned restaurant", body=transformLogo(logo=logo,address))
+    return successimgResponse(message="successfully returned restaurant", body=transformLogo(logo=logo,address=address))
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 
 from http import HTTPStatus
 
@@ -36,3 +36,6 @@ def paginatedResponse(httpStatusCode=HTTPStatus.OK, message="", body={}, paginat
 
 def successResponse(httpStatusCode=HTTPStatus.OK, message="", body={}):
     return JsonResponse({'data': body, 'message': message}, status=httpStatusCode, safe=False)
+
+def successimgResponse(httpStatusCode=HTTPStatus.OK, message="", body={}):
+    return Httpesponse({'data': body, 'message': message}, status=httpStatusCode, safe=False)

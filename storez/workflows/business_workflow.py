@@ -331,5 +331,5 @@ def getBusinessLogoByBusinessID(request,businessID):
     if logo == None:
         return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())
     print(logo.logo)
-    return HttpResponse(logo)
+    return FileResponse(logo.logo)
 

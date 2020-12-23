@@ -21,6 +21,7 @@ from business.views import (
                                 listAllBusinesses,
                                 uploadFileToS3,
                                 getBusinessLogo,
+                                getBusinessAddress
                                 getClient
                                )
 

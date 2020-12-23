@@ -330,6 +330,6 @@ def getBusinessLogoByBusinessID(request,businessID):
     logo = getBusinessLogo(business=businessToBeRetrieved)
     if logo == None:
         return resourceNotFoundResponse(ErrorCodes.LOGO_DOES_NOT_EXIST,message=getLogoDoesNotExistErrorPacket())
-        
+
     return FileResponse(logo.logo)
 

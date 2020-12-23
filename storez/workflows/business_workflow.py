@@ -337,5 +337,6 @@ def getBusinessLogoByBusinessID(request,businessID):
     address = getBusinessAddress(business=businessToBeRetrieved)
     if address == None:
         return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
-    return FileResponse(logo.logo)
+
+    return successResponse(message="successfully returned restaurant", body=transformLogo(logo=logo,address))
 

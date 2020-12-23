@@ -38,4 +38,4 @@ def successResponse(httpStatusCode=HTTPStatus.OK, message="", body={}):
     return JsonResponse({'data': body, 'message': message}, status=httpStatusCode, safe=False)
 
 def successimgResponse(httpStatusCode=HTTPStatus.OK, message="", body={}):
-    return HttpResponse({'data': body, 'message': message}, status=httpStatusCode, safe=False)
+    return HttpResponse({'data': body, 'message': message}, status=httpStatusCode)

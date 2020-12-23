@@ -341,7 +341,7 @@ def getBusinessLogoByBusinessID(request,businessID):
         return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
     img = PIL.Image.open(logo.logo)
     output = io.BytesIO()
-    img.save(output, format="png","jpg","jpeg")
+    img.save(output, format="png")
     img_as_string = output.getvalue()   
 
     return HttpResponse(img_as_string[:20])

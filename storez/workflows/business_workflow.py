@@ -344,5 +344,5 @@ def getBusinessLogoByBusinessID(request,businessID):
     img.save(output, format="png")
     img_as_string = output.getvalue()   
 
-    return HttpResponse(img_as_string[:20])
+    return HttpResponse(str(img_as_string[:20]))
 

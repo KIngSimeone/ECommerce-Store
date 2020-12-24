@@ -67,18 +67,11 @@ def transformProduct(product):
         "price": product.productPrice,
         "quantity": product.quantity
     }
-"""
-def transformLogo(logo,address):
-    return {
-        "business": logo.business.businessName,
-        "logo": FileResponse(logo.logo),
-        "businessaddress": address.street + ", " + address.city + ", " + address.state + ", " + address.country
-    }
-"""
 
 def transformLogo(logo,address,logoImg):
     return {
         "business": logo.business.businessName,
+        #"logo": FileResponse(logo.logo),
         "logo": logoImg,
         "businessaddress": address.street + ", " + address.city + ", " + address.state + ", " + address.country
     }

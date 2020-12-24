@@ -342,7 +342,6 @@ def getBusinessLogoByBusinessID(request,businessID):
     
     img = Image.open(logo.logo)
     output = io.BytesIO()
-    img.save(output, format="png")
     img_as_string = output.getvalue()   
 
     logo_img = (str(img_as_string[:20]))

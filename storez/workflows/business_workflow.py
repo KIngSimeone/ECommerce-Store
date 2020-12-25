@@ -344,7 +344,7 @@ def getBusinessLogoByBusinessID(request,businessID):
     output = io.BytesIO()
     img_as_string = output.getvalue()   
 
-    logo_img = (str(img_as_string[:20]))
+    logo_img = (str(img_as_string[:20])) 
 
     return successResponse(message="successfully created restaurant", body=transformLogo(logo=logo,address=address,logoImg=logo_img))
 

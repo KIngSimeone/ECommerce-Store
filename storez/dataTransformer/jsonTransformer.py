@@ -50,7 +50,6 @@ def transformBusiness(business):
         "createdBy": user
     }
 
-
 def transformBusinessList(businessList):
     results = []
     for business in businessList:

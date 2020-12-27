@@ -78,4 +78,4 @@ def transformLogo(logo,address,logoImg):
 def transformProductList(productList):
     results = []
     for product in productList:
-        results.append(transformProduct(product))
+        results.append(transformSProduct(product))

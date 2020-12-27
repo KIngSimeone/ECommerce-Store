@@ -30,7 +30,6 @@ logger = logging.getLogger(__name__)
 # handle  user "/authenticate" route
 def authenticationRouter(request):
     if request.method == 'POST':
-        ## call authenticate
         return login(request)
 
 # Authenticate User
@@ -62,3 +61,4 @@ def login(request):
 
     userAccessToken = generateUserAccessToken(user)
     return successResponse(message="successfully authenticated", body=generateLoginResponse(user, userAccessToken))
+s

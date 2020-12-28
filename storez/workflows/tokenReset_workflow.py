@@ -71,7 +71,7 @@ def resetToken(request):
     return successResponse(message="An email was sent to your account if you have an account with us", body={})
     
 def validateToken(request):
-    # get the request payload
+    # get the request payloads
     body = json.loads(request.body)
 
     # check if required fields are present in request payload

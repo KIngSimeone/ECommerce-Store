@@ -79,7 +79,6 @@ def validateToken(request):
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
-
     # check if token is valid and hasn't expired
     token = body['token']
     isValid = (getUserPasswordResetTokenByResetToken(token) != None)

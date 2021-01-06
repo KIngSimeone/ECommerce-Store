@@ -338,17 +338,11 @@ def getBusinessLogoByBusinessID(request,businessID):
     # get business address
     address = getBusinessAddress(business=businessToBeRetrieved)
     if address == None:
-        return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket)
-    """
-    img = Image.open(logo.logo)
-    output = io.BytesIO()
-    img_as_string = output.getvalue()   
-
-    logo_img = (str(img_as_string[:20])) 
-
-    return successResponse(message="successfully created restaurant", body=transformLogo(logo=logo,address=address,logoImg=logo_img))
-"""
-    return HttpResponse(logo.logo.url)
+        return resourceNotFoundResponse(ErrorCodes.ADDRESS_DOES_NOT_EXIST,message=getAddressDoesNotExistErrorPacket())
+    
+    img = logo.logo.url
+    img = img[8:]
+    return successResponse(message="successfully returned restaurant info", body=transformLogo(logo=logo,address=address,logoImg=logo_img))
     
     
     

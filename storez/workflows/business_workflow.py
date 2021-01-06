@@ -348,7 +348,7 @@ def getBusinessLogoByBusinessID(request,businessID):
 
     return successResponse(message="successfully created restaurant", body=transformLogo(logo=logo,address=address,logoImg=logo_img))
 """
-    return FileResponse(logo.logo)
+    return FileResponse(logo.logo.name)
     
     
     

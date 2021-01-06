@@ -15,7 +15,6 @@ def generateLoginResponse(user, userAccessToken):
         "userCategoryType": user.userCategoryType,
         "lastActive": toUiReadableDateFormat(user.lastActiveOn)
     }
-
     return user
 
 def transformUser(user):
@@ -36,7 +35,6 @@ def transformUsersList(Users):
         results.append(transformUser(user))
 
     return results
-
 
 def transformBusiness(business):
     user = business.user.firstName + " " + business.user.lastName

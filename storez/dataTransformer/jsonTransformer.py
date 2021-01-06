@@ -38,7 +38,6 @@ def transformUsersList(Users):
 
 def transformBusiness(business):
     user = business.user.firstName + " " + business.user.lastName
-
     return {
         "id": business.id,
         "name": business.businessName,

@@ -70,7 +70,6 @@ def transformProduct(product):
 def transformLogo(logo,address,logoImg):
     return {
         "business": logo.business.businessName,
-        #"logo": FileResponse(logo.logo),
         "logo": logoImg,
         "businessaddress": address.street + ", " + address.city + ", " + address.state + ", " + address.country
     }

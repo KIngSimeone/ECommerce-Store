@@ -342,6 +342,7 @@ def getBusinessLogoByBusinessID(request,businessID):
     
     img = logo.logo.url
     img = img[8:]
+    logo_img = img
     return successResponse(message="successfully returned restaurant info", body=transformLogo(logo=logo,address=address,logoImg=logo_img))
     
     

@@ -32,7 +32,6 @@ from account.views import (
                 sendEmail
             )
 
-
 def resetTokenURLRouter(request):
     if request.method == "POST":
         return resetToken(request)
@@ -50,7 +49,7 @@ def resetToken(request):
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
-    # check if email is in valid format
+    # check if email is in valid formats
     email = body['email']
     if validateEmailFormat(email) is False:
         return badRequestResponse(errorCode = ErrorCodes.GENERIC_INVALID_PARAMETERS, message="Email format is invalid")

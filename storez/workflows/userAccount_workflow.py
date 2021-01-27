@@ -89,6 +89,7 @@ def deleteUserAccountRouter(request, userID):
 def passwordResetRouter(request):
     if request.method == "POST":
         return passwordReset(request)
+"""
 
 # Create User
 def createUser(request):
@@ -163,7 +164,7 @@ def createUser(request):
     createAccount = createUserAccount(user=createdUser)
 
     return successResponse(message="successfully created user", body=transformUser(createdUser))
-
+"""
 # update user
 def updateUser(request, userID):
     # verify that the calling user has a valid token
@@ -386,3 +387,91 @@ def passwordReset(request):
                                            message=getPasswordResetFailedErrorPacket())
 
     return successResponse(message="Password Reset was successful")
+
+
+
+
+
+"""
+# Create User
+def createUser(request):
+    # get Json information passed in
+    body = json.loads(request.body)
+
+    #check if required fields are present in request payload
+    missingKeys = validateKeys(payload=body, requiredKeys=['users'])
+
+    users = body['users']
+
+    for user in users:
+
+        # check if required fields are present in request payload
+        missingKeys = validateKeys(payload=users, requiredKeys=[
+                                'firstName','lastName','email','phone','userName','userCategoryType','password'])
+
+        if missingKeys:
+            return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
+            
+
+        #validate if the email is in the correct format
+        if not validateEmailFormat(body['email']):
+            return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                    message=getGenericInvalidParametersErrorPacket("Email format is invalid"))
+
+        #validate if the phone is in the correct formats
+        if not validatePhoneFormat(body['phone']):
+            return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                    message=getGenericInvalidParametersErrorPacket("Phone format is invalid"))
+
+        if not validateThatStringIsEmptyAndClean(body['firstName']):
+            return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                    message=getGenericInvalidParametersErrorPacket( "First name cannot be empty or contain special characters"))
+
+        if not validateThatStringIsEmptyAndClean(body['lastName']):
+            return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                    message=getGenericInvalidParametersErrorPacket("Last name cannot be empty or contain special characters"))
+
+        if not validateThatStringIsEmpty(body['password']):
+            return badRequestResponse(errorCode = ErrorCodes.GENERIC_INVALID_PARAMETERS,
+                                        message=getGenericInvalidParametersErrorPacket("Password cannot be empty"))
+
+        #check if user with that username exists
+        if getUserByUserName(body['userName']) is not None:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+                                            message=getUserAlreadyExistErrorPacket('username'))
+
+        #check if user with that email exists
+        if getUserByEmail(body['email']) is not None:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+                                            message=getUserAlreadyExistErrorPacket('email'))
+
+        #Check if user with that phone exists
+        if getUserByPhone(body['phone']) is not None:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+                                            message=getUserAlreadyExistErrorPacket('phone'))
+
+        # check that the user category type specified is correct
+        confirmedUserCategoryTypeValidity = False
+        for categoryType in UserCategoryType:
+            if categoryType.value == body['userCategoryType'].lower():
+                confirmedUserCategoryTypeValidity = True
+                userCategoryType = categoryType.value
+
+        if not confirmedUserCategoryTypeValidity:
+            return badRequestResponse(errorCode=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
+                                    message=getUserCategoryInvalidErrorPacket())
+
+        createdUsers = createUserRecord(firstName=user['firstName'],lastName=user['lastName'],
+                                        userName=user['userName'], email=user['email'],
+                                        password=user['password'], phone=user['phone'],
+                                        userCategoryType=user['userCategoryType']
+                                    )
+
+        if createdUsers == None:
+            return internalServerErrorResponse(ErrorCodes.USER_CREATION_FAILED,
+                                                message=getUserCreationFailedErrorPacket())
+        createAccount = createUserAccount(user=createdUsers)
+
+        return successResponse(message="successfully created users", body=transformUser(createdUsers))
+
+"""

@@ -479,7 +479,7 @@ def createUser(request):
 # Create User
 def createUser(request):
     # get Json information passed in
-    body = json.dumps(request.body)
+    body = json.loads(request.body)
 
     #check if required fields are present in request payload
     missingKeys = validateKeys(payload=body, requiredKeys=[

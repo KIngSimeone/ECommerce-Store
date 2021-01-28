@@ -529,14 +529,14 @@ def createUser(request):
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('username'))
 
-    #check if user with that email exists
-    if getUserByEmail(body['email']) is not None:
-        return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+        #check if user with that email exists
+        if getUserByEmail(body['email']) is not None:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('email'))
 
-    #Check if user with that phone exists
-    if getUserByPhone(body['phone']) is not None:
-        return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+        #Check if user with that phone exists
+        if getUserByPhone(body['phone']) is not None:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('phone'))
 
     return HttpResponse("Success")

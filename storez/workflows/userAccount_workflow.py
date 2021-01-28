@@ -512,21 +512,21 @@ def createUser(request):
             return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                   message=getGenericInvalidParametersErrorPacket("Phone format is invalid"))
 
-    if not validateThatStringIsEmptyAndClean(body['firstName']):
-       return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+        if not validateThatStringIsEmptyAndClean(user['firstName']):
+            return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                   message=getGenericInvalidParametersErrorPacket( "First name cannot be empty or contain special characters"))
 
-    if not validateThatStringIsEmptyAndClean(body['lastName']):
-        return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
+        if not validateThatStringIsEmptyAndClean(user['lastName']):
+            return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                   message=getGenericInvalidParametersErrorPacket("Last name cannot be empty or contain special characters"))
 
-    if not validateThatStringIsEmpty(body['password']):
-        return badRequestResponse(errorCode = ErrorCodes.GENERIC_INVALID_PARAMETERS,
+        if not validateThatStringIsEmpty(user['password']):
+            return badRequestResponse(errorCode = ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                     message=getGenericInvalidParametersErrorPacket("Password cannot be empty"))
 
-    #check if user with that username exists
-    if getUserByUserName(body['userName']) is not None:
-        return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
+        #check if user with that username exists
+        if getUserByUserName(body['userName']) is not None:
+            return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('username'))
 
     #check if user with that email exists

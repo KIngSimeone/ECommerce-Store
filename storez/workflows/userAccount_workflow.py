@@ -539,6 +539,13 @@ def createUser(request):
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('phone'))
 
+        # check that the user category type specified is correct
+        confirmedUserCategoryTypeValidity = False
+        for categoryType in UserCategoryType:
+            if categoryType.value == body['userCategoryType'].lower():
+                confirmedUserCategoryTypeValidity = True
+                userCategoryType = categoryType.value
+
     return HttpResponse("Success")
 
     """

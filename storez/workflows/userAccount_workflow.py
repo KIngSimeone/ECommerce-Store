@@ -480,17 +480,17 @@ def createUser(request):
 # Create User
 def createUser(request):
     # get Json information passed in
-    body = json.loads(request.body)
-
+    body = request.body
+    
     #check if required fields are present in request payload
     missingKeys = validateKeys(payload=body, requiredKeys=['users'])
 
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
-    users = body['users']
+    users = json.load(body['users'])
 
-    for user in body['users']:
+    for user in users:
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
         print(user)
         #check if required fields are present in request payload
@@ -501,6 +501,7 @@ def createUser(request):
 
     
         return HttpResponse("Success")
+
     """#validate if the email is in the correct format
     if not validateEmailFormat(body['email']):
         return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,

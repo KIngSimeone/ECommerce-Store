@@ -480,7 +480,7 @@ def createUser(request):
 # Create User
 def createUser(request):
     # get Json information passed in
-    body = json.load(request.body)
+    body = json.loads(request.body)
     
     #check if required fields are present in request payload
     missingKeys = validateKeys(payload=body, requiredKeys=['users'])
@@ -489,12 +489,12 @@ def createUser(request):
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
     users = body['users']
-
-    for user in users:
+    print(len(users))
+    for key in users:
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
-        print(user)
+        print(key['firstName'])
         #check if required fields are present in request payload
-        missingKeys = validateKeys(payload=user, requiredKeys=fields)
+        missingKeys = validateKeys(payload=key, requiredKeys=fields)
 
         if missingKeys:
             return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")

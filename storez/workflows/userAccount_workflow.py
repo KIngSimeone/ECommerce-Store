@@ -490,8 +490,10 @@ def createUser(request):
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
     users = body['users']
-    print(len(users))
-    for user in users:
+    list_users = list(users)
+    print(list_users)
+    for user in list_users:
+        print(user)
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
     
         #check if required fields are present in request payload
@@ -501,7 +503,7 @@ def createUser(request):
             return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
 
     
-        return HttpResponse("Success")
+    return HttpResponse("Success")
 
     """
     #validate if the email is in the correct format

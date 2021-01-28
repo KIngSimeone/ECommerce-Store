@@ -490,9 +490,7 @@ def createUser(request):
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
     users = body['users']
-    list_users = list(users)
-    print(list_users)
-    for user in list_users:
+    for user in users:
         print(user)
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
     

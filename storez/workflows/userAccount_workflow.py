@@ -558,12 +558,13 @@ def createUser(request):
         if createdUser == None:
             return internalServerErrorResponse(ErrorCodes.USER_CREATION_FAILED,
                                             message=getUserCreationFailedErrorPacket())
+        print(createdUser)
         createAccount = createUserAccount(user=createdUser)
-        created_users = []
-        user_copy = user.copy()
-        created_users.append(user_copy)
+        user_list=[]
+        user_list.append(createdUser)
+        print(user_list)
 
-    return successResponse(message="successfully created user", body=transformUsersList(created_users))
+    return successResponse(message="successfully created user", body=transformUsersList(user_list))
 
     """
     #validate if the email is in the correct format

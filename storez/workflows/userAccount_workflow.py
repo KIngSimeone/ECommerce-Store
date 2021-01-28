@@ -559,8 +559,9 @@ def createUser(request):
             return internalServerErrorResponse(ErrorCodes.USER_CREATION_FAILED,
                                             message=getUserCreationFailedErrorPacket())
         createAccount = createUserAccount(user=createdUser)
+        created_users=(list(createdUser))
 
-    return successResponse(message="successfully created user", body=transformUser(createdUser))
+    return successResponse(message="successfully created user", body=transformUsersList(created_users))
 
     """
     #validate if the email is in the correct format

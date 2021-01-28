@@ -490,11 +490,11 @@ def createUser(request):
     
     users = body['users']
     print(len(users))
-    while user in users:
+    for user in users:
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
-        print(user)
+        print(use)
         #check if required fields are present in request payload
-        missingKeys = validateKeys(payload=user, requiredKeys=fields)
+        missingKeys = validateKeys(payload=users, requiredKeys=fields)
 
         if missingKeys:
             return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
@@ -502,7 +502,8 @@ def createUser(request):
     
         return HttpResponse("Success")
 
-    """#validate if the email is in the correct format
+    """
+    #validate if the email is in the correct format
     if not validateEmailFormat(body['email']):
         return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,
                                   message=getGenericInvalidParametersErrorPacket("Email format is invalid"))

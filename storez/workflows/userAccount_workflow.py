@@ -490,11 +490,11 @@ def createUser(request):
     
     users = body['users']
     print(len(users))
-    for key in users:
+    while user in users:
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
-        print(key['firstName'])
+        print(user)
         #check if required fields are present in request payload
-        missingKeys = validateKeys(payload=key, requiredKeys=fields)
+        missingKeys = validateKeys(payload=user, requiredKeys=fields)
 
         if missingKeys:
             return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")

@@ -525,7 +525,7 @@ def createUser(request):
                                     message=getGenericInvalidParametersErrorPacket("Password cannot be empty"))
 
         #check if user with that username exists
-        if getUserByUserName(body['userName']) is not None:
+        if getUserByUserName(user['userName']) is not None:
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('username'))
 

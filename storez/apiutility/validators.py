@@ -74,3 +74,15 @@ def validateKeys(payload, requiredKeys):
             missingKeys.append(key)
 
     return missingKeys
+
+def validateEntry(payload, requiredKeys):
+    # extract keys from payload
+    payloadKeys = list(payload)
+
+    # check if extracted keys is present in requiredKeys
+    missingKeys = []
+    for key in requiredKeys:
+        if key not in payloadKeys:
+            missingKeys.append(key)
+
+    return missingKeys

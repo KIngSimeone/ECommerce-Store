@@ -34,6 +34,7 @@ from apiutility.responses import (
                 )
 
 from apiutility.validators import (
+                                  validateEntry,
                                   validateKeys, 
                                   validateEmailFormat,
                                   validatePhoneFormat,
@@ -492,9 +493,9 @@ def createUser(request):
     print(len(users))
     for user in users:
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
-        print(use)
+    
         #check if required fields are present in request payload
-        missingKeys = validateKeys(payload=users, requiredKeys=fields)
+        missingKeys = validateEntry(payload=users, requiredKeys=fields)
 
         if missingKeys:
             return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")

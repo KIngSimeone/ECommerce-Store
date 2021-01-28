@@ -559,7 +559,7 @@ def createUser(request):
             return internalServerErrorResponse(ErrorCodes.USER_CREATION_FAILED,
                                             message=getUserCreationFailedErrorPacket())
         createAccount = createUserAccount(user=createdUser)
-        created_users=(list(createdUser))
+        created_users=list.append(user)
 
     return successResponse(message="successfully created user", body=transformUsersList(created_users))
 

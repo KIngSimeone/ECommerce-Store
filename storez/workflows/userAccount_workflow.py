@@ -489,11 +489,12 @@ def createUser(request):
     if missingKeys:
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
+    user_list=[]
     
     users = body['users']
     for user in users:
 
-        index= users.index
+        index = users.index
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
     
         #check if required fields are present in request payload
@@ -560,7 +561,7 @@ def createUser(request):
                                             message=getUserCreationFailedErrorPacket())
         print(createdUser)
         createAccount = createUserAccount(user=createdUser)
-        user_list=[]
+
         user_list.append(createdUser)
         print(user_list)
 

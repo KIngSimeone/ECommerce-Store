@@ -498,7 +498,7 @@ def createUser(request):
         missingKeys = validateKeys(payload=user, requiredKeys=fields)
 
         if missingKeys:
-            return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
+            return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys} for {user['firstName']}")
 
     
     return HttpResponse("Success")

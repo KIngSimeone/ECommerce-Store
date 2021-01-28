@@ -530,19 +530,19 @@ def createUser(request):
                                         message=getUserAlreadyExistErrorPacket('username'))
 
         #check if user with that email exists
-        if getUserByEmail(body['email']) is not None:
+        if getUserByEmail(user['email']) is not None:
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('email'))
 
         #Check if user with that phone exists
-        if getUserByPhone(body['phone']) is not None:
+        if getUserByPhone(user['phone']) is not None:
             return resourceConflictResponse(errorCode=ErrorCodes.USER_ALREADY_EXIST,
                                         message=getUserAlreadyExistErrorPacket('phone'))
 
         # check that the user category type specified is correct
         confirmedUserCategoryTypeValidity = False
         for categoryType in UserCategoryType:
-            if categoryType.value == body['userCategoryType'].lower():
+            if categoryType.value == user['userCategoryType'].lower():
                 confirmedUserCategoryTypeValidity = True
                 userCategoryType = categoryType.value
 

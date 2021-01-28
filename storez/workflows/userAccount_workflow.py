@@ -546,7 +546,21 @@ def createUser(request):
                 confirmedUserCategoryTypeValidity = True
                 userCategoryType = categoryType.value
 
-    return HttpResponse("Success")
+        if not confirmedUserCategoryTypeValidity:
+            return badRequestResponse(errorCode=ErrorCodes.USER_CATEGORY_TYPE_INVALID,
+                                message=getUserCategoryInvalidErrorPacket())
+
+        createdUser = createUserRecord(firstName=user['firstName'],lastName=user['lastName'],
+                                    userName=user['userName'], email=user['email'],
+                                    password=user['password'], phone=user['phone'],
+                                    userCategoryType=user['userCategoryType']
+                                )
+        if createdUser == None:
+            return internalServerErrorResponse(ErrorCodes.USER_CREATION_FAILED,
+                                            message=getUserCreationFailedErrorPacket())
+        createAccount = createUserAccount(user=createdUser)
+
+    return successResponse(message="successfully created user", body=transformUser(createdUser))
 
     """
     #validate if the email is in the correct format

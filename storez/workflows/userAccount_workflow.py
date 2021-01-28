@@ -1,6 +1,7 @@
 import os
 import json
 from django.conf import settings
+from django.http import HttpResponse
 
 from account.views import (
                            createUser as createUserRecord,
@@ -488,9 +489,10 @@ def createUser(request):
         return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")
     
     for user in body['users']:
-        if "firstName" in student:
-            print("Key exist in JSON data")
-        
+        fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
+
+    
+    return HttpResponse("Success")
     """#validate if the email is in the correct format
     if not validateEmailFormat(body['email']):
         return badRequestResponse(errorCode=ErrorCodes.GENERIC_INVALID_PARAMETERS,

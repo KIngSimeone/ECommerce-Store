@@ -495,7 +495,7 @@ def createUser(request):
         fields = ['firstName','lastName','userName','email','phone','password','userCategoryType']
     
         #check if required fields are present in request payload
-        missingKeys = validateEntry(payload=users, requiredKeys=fields)
+        missingKeys = validateKeys(payload=user, requiredKeys=fields)
 
         if missingKeys:
             return badRequestResponse(ErrorCodes.MISSING_FIELDS, message=f"The following key(s) are missing in the request payload: {missingKeys}")

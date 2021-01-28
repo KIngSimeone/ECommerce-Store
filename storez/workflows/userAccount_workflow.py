@@ -563,7 +563,7 @@ def createUser(request):
         createAccount = createUserAccount(user=createdUser)
 
         user_list.append(createdUser)
-        print(user_list)
+
 
     return successResponse(message="successfully created user", body=transformUsersList(user_list))
 

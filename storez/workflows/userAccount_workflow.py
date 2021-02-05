@@ -189,7 +189,6 @@ def updateUser(request, userID):
     else:
         keys = ['email', 'userName', 'firstName',
                  'lastName', 'phone', 'userCategoryType']
-
     # check if required fields are present in request payload
     missingKeys = validateKeys(payload=body, requiredKeys=keys)
     if missingKeys:

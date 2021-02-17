@@ -256,7 +256,6 @@ def updateUser(request, userID):
                                         userName=body['userName'], email=body['email'],
                                         password=body['password'], phone=body['phone'], userCategoryType=body['userCategoryType']
                                         )
-
         else:
             updatedUser = updateUserRecord(userToBeUpdated, firstName=body['firstName'], lastName=body['lastName'],
                                         userName=body['userName'], email=body['email'],
